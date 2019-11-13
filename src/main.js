@@ -3,13 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import '@/assets/css/reset.css'
+
 Vue.prototype.bus = new Vue;
 import 'muse-ui/lib/styles/base.less';
 import { Button, TextField } from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
+import '@/assets/css/reset.css'
+import Helpers from 'muse-ui/lib/Helpers';
 
-Vue.use(Button).use(TextField);
+Vue.use(Button).use(TextField).use(Helpers);
 
 Vue.config.productionTip = false
 

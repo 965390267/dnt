@@ -14,15 +14,15 @@ Vue.use(Router)
       }
     },
 
-    // {
-    //   path: '/zhiya',
-    //   name: 'zhiya',
-    //   component:()=>import('@/view/ziya'),
-    //   meta:{
-    //     title:'Nova 质变'
-    //   }
-    // }
-    // ,
+    {
+      path: '/zhiya',
+      name: 'zhiya',
+      component:()=>import('@/view/ziya'),
+      meta:{
+        title:'Nova 质变'
+      }
+    }
+    ,
     {
       path: '/suhui',
       name: 'suhui',

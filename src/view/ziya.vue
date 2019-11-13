@@ -1,43 +1,40 @@
 <template>
-  <diV class="ziya">
-    <div class="avtor">
-      <!-- <div class="circle"></div> -->
-      {{$route.query.nodeName}}
+  <div class="ziya">
+     <div class="logo">
+   <lo-go txt="DNT" :url="require('../assets/img/dntlogo@2x.png')"></lo-go>
     </div>
-    <div class="balance">
-      <div class="canbalance">{{initDataObj.balance/1000}}NOVA</div>
-      <div class="inputbalance">{{$t('zhiya.canusemoney')}}</div>
+    <div class="tips">
+        <div class="lt">DNT 投入数量</div>
+        <div class="rf">20000</div>
     </div>
-    <div class="classinput">
-      <div class="inputwrap">
-        <div class="total" @click="setAll()">{{$t('zhiya.total')}}</div>
-        <input
-          class="inputcount"
-          type="number"
-          v-model="amount"
-          :placeholder="$t('zhiya.placeholder')"
-        />
-      </div>
+    <div class="input-wrap">
+        <input type="text" placeholder="输入数量">
+        <div class="total">DNT | 全部</div>
     </div>
-    <div class="smtip">{{$t('zhiya.gasprice')}}{{gasPrice.toFixed(7)}}ETH</div>
-    <mu-button class="submit-btn" @click="get()" v-html="$t('zhiya.zhiya')"></mu-button>
-    <div class="note">
-      <p>{{$t('zhiya.note1')}}</p>
-      <p>{{$t('zhiya.note2')}}</p>
-      <!-- <p>收益</p>
-      <p>质押收益来自出块奖励和交易手续风险</p>
-      <p>如果有效节点行为不端将可能会被罚没部分质押代币，比如有效节</p>
-      <p>点双重签名，经常性离线。为了规避风险，请认真选择合格的验证</p>
-      <p>节点</p>-->
+    <div class="pricegas">手续费：50 DNT</div>
+    <div class="pladge-rule">
+        <p class="p1">质押规则：</p>
+        <p>当日投入DNT后将于次日产生BFB收益，并将于每日24:00结算当日收益。</p>
+        <p>BFB的产出速度与根据投入DNT的时间和数量呈正比。</p>
+        <p>即DNT投入数量越多，BFB产出越快；DNT投入时间越久，BFB产出越多。</p>
+        <p> 投入10000DNT，一年将产出300BFB。</p>
+        <p> DNT现价：0.025USDT</p>
+        <p>BFB现价：0.14USDT</p>
+        <p>当前年化16.8%</p>
     </div>
-    <loading v-if="show"></loading>
-  </diV>
+   <div class="btn-wrap">
+    
+     <div class="btn"> <mu-ripple class="mu-ripple-demo demo-3"  :opacity="0.5">确定 </mu-ripple></div>
+ 
+   </div>
+  </div>
 </template>
 <script>
 import loading from "@/components/loading";
+import LoGo from "@/components/logo";
 import { getNodePledge, personalAssest, getGas } from "@/config";
 export default {
-  components: {},
+  components: {LoGo},
   data() {
     return {
       initDataObj: {
@@ -474,119 +471,87 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ziya {
-  height: 100%;
-  background: #fdf9f4;
-  overflow: hidden;
-}
-.avtor {
-  width: 90%;
-  margin: 15px auto;
+
+.logo{
+  margin-top: 15px;
   display: flex;
-  align-items: center;
-  color: #122f4d;
-  font-size: 19px;
-  .circle {
-    margin-right: 5px;
-    width: 30px;
-    height: 30px;
-    background: -webkit-gradient(
-      linear,
-      left top,
-      right top,
-      from(#f08740),
-      to(#f06b40)
-    );
-    background: linear-gradient(90deg, #f08740, #f06b40);
-    border-radius: 50%;
-  }
+  justify-content: center;
 }
-
-.balance {
-  width: 90%;
+.tips{
+  width: 95%;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/* 提示 */
+.input-wrap{
   position: relative;
-  .canbalance {
-    position: absolute;
-    right: 15px;
-
-    color: #f08a40;
-    font-size: 13px;
-  }
-  .inputbalance {
-    width: 100%;
-    margin: 0 auto;
-    // height: 40px;
-    // line-height: 40px;
-    // border: 1px solid #F07440;
-    background: transparent;
-    outline: none;
-    border-radius: 8px;
-    color: #b3b7ba;
-    font-size: 13px;
-  }
-}
-.inputwrap {
-  width: 100%;
-  position: relative;
-  .total {
-    position: absolute;
-    right: 0;
-    height: 40px;
-    line-height: 40px;
-    width: 50px;
-    text-align: center;
-    color: #f08a40;
-    font-size: 13px;
-  }
-  .inputcount {
-    width: 100%;
-    margin: 0 auto;
-    height: 40px;
-    line-height: 40px;
-    border: 1px solid #f07440;
-    background: transparent;
-    outline: none;
-    border-radius: 8px;
-  }
-}
-.classinput {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 10px;
+  padding: 6px 2px;
+  border: 1px solid #707070;
+  border-radius: 6px;
 }
-.smtip {
-  width: 90%;
-
-  margin: 0 auto;
-  margin-top: 5px;
-  text-align: right;
-  font-size: 10px;
-  color: #979fa5;
+.input-wrap input{
+  border: none;
+  outline: none;
+  background: transparent;
 }
-.submit-btn {
-  display: block;
-  width: 90%;
-  height: 36px;
-  margin: 0 auto;
-  margin-top: 30px;
-  background: linear-gradient(90deg, #f08740, #f06b40);
-  border-radius: 20px;
-  line-height: 36px;
-  color: #fff;
-  text-align: center;
-}
-.ziya .note {
-  padding: 40px 10px;
-}
-.ziya .note p {
-  color: #979fa5;
+.input-wrap .total{
+  position: absolute;
+  right: 14px;
+  top: 8px;
+  color: #707070;
   font-size: 12px;
-  text-align: left;
-  padding: 2px 0;
-  line-height: 20px;
-  letter-spacing: 2px;
+}
+/* 输入 */
+.pricegas{
+  font-size:11px;
+font-family:PingFang SC;
+font-weight:400;
+text-align: right;
+padding-right: 2.5%;
+margin-top: 15px;
+}
+/* 规则 */
+.pladge-rule{
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 70px;
+}
+.pladge-rule p{
+font-size:12px;
+color: #707070;
+padding: 3px 2px;
+line-height: 18px;
+}
+.pladge-rule .p1{
+  color: #000;
+  font-size: 14px;
+    margin-bottom: 12px;
+}
+/* 按钮 */
+.btn-wrap{
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+}
+.btn{
+ width:349px;
+height:48px;
+margin: 0 auto;
+background:linear-gradient(131deg,rgba(38,38,107,1) 0%,rgba(19,24,36,1) 100%);
+box-shadow:0px 3px 6px rgba(0,0,0,0.55);
+opacity:1;
+border-radius:24px;
+text-align: center;
+color: #fff;
+line-height: 48px;
+font-size: 17px;
 }
 </style>
 

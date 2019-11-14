@@ -14,7 +14,14 @@ import Message from 'muse-ui-message';
 import option from './messageconf'
 import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css
 import Loading from 'muse-ui-loading';
-Vue.use(Loading);
+Vue.use(Loading,{
+  overlayColor: 'rgba(0, 0, 0, .7)',        // 背景色
+  size: 20,
+  color: 'primary',                           // color
+  text:'数据加载中',
+  className: '' ,
+  target:document.body
+});
 Vue.use(Button).use(Dialog).use(Snackbar).use(Icon).use(Progress).use(TextField).use(Helpers).use(Message,option);
 
 Vue.config.productionTip = false

@@ -24,7 +24,7 @@
     </div>
    <div class="btn-wrap">
     
-     <div class="btn"  v-loading="btnloading" data-mu-loading-size="28"> <mu-ripple class="mu-ripple" @click="get()"   :opacity="0.5">确定 </mu-ripple></div>
+     <div class="btn"  v-loading="btnloading" data-mu-loading-text="" data-mu-loading-size="28"> <mu-ripple class="mu-ripple" @click="get()"   :opacity="0.5">确定 </mu-ripple></div>
  
    </div>
   </div>

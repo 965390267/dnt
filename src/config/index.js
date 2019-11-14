@@ -3,7 +3,6 @@ import Vue from 'vue'
 import Toast from 'muse-ui-toast';
 import Loading from 'muse-ui-loading';
 
-import 'muse-ui-loading/dist/muse-ui-loading.css';
 Vue.use(Toast,{
   position: 'top',               // 弹出的位置
   time: 2000,                       // 显示的时长
@@ -14,14 +13,7 @@ Vue.use(Toast,{
   warningIcon: '',     // 提醒信息图标
   errorIcon: ''              // 错误信息图标
 });
-Vue.use(Loading,{
-  overlayColor: 'rgba(0, 0, 0, .7)',        // 背景色
-  size: 20,
-  color: 'primary',                           // color
-  text:'数据加载中',
-  className: '' ,
-  target:document.body
-});
+// Vue.use(Loading);
 // // export const baseurl='http://106.15.52.35:8080/' 
 //   // axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
   axios.defaults.baseURL = env() == 'production'?location.origin+'/':'https://dnt.network';

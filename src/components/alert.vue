@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-let self=this;
+
 export default {
   props:{
    content:{

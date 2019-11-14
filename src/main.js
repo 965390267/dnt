@@ -6,12 +6,13 @@ import router from './router'
 
 Vue.prototype.bus = new Vue;
 import 'muse-ui/lib/styles/base.less';
-import { Button, TextField } from 'muse-ui';
+import { Button, TextField,Dialog ,Snackbar,Icon,Progress} from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
 import '@/assets/css/reset.css'
 import Helpers from 'muse-ui/lib/Helpers';
-
-Vue.use(Button).use(TextField).use(Helpers);
+import Message from 'muse-ui-message';
+import option from './messageconf'
+Vue.use(Button).use(Dialog).use(Snackbar).use(Icon).use(Progress).use(TextField).use(Helpers).use(Message,option);
 
 Vue.config.productionTip = false
 
@@ -58,6 +59,8 @@ if (!!window.imToken) {/* imtoken环境下 */
 else {/* 浏览器环境下 */
 
   if (env() != 'production') {
+    Vue.prototype.imtokenAddress = '0xfe35583b20f5f4a29e10260a03a2d94a2117525a'
+  }else{
     Vue.prototype.imtokenAddress = '0x9861C181Be9413bF8f445d4AeEbc9DcF71D8eA03'
   }
   function env() {
@@ -65,7 +68,7 @@ else {/* 浏览器环境下 */
     if (window.location.href.includes('192.168')) return 'test';        //测试环境，"192.168"根据实际情况而定
     return 'production'                                                 //线上环境0x6E746901b6675a9AE97e3458D9F45d424bFCd908
   }
-  Vue.prototype.imtokenAddress = '0x9861C181Be9413bF8f445d4AeEbc9DcF71D8eA03'
+
   /* eslint-disable no-new */
   vm.$mount('#app')
 }

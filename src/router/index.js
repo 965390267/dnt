@@ -45,7 +45,7 @@ Vue.use(Router)
       name: 'moneyrecord',
       component:()=>import('@/view/moneyrecord'),
       meta:{
-        title:'Nova 质变'
+        title:'收益记录'
       }
     },
     {
@@ -53,7 +53,7 @@ Vue.use(Router)
       name: 'recentrecord',
       component:()=>import('@/view/recentrecord'),
       meta:{
-        title:'Nova 质变'
+        title:'最近交易'
       }
     },
 

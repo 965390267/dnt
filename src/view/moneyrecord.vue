@@ -6,20 +6,20 @@
           <div class="lf-icon"></div>
           <div class="txt">BFB</div>
       </div>
-      <div class="profit">累计收益：3.225</div>
+      <div class="profit">累计收益：{{totalIncome}}</div>
     </div>
   </div>
 
     <div class="list-wrap">
             <ul>
-                <li>
+                <li v-for="(item,index) in recordList" :key='index'>
                     <div class="top">
                         <div class="lf">收益</div>
-                        <div class="rt">+0.8<i class="icon"></i> </div>
+                        <div class="rt">{{item.incomeAmount/1000>0?'+'+item.incomeAmount/1000:'-'+item.incomeAmount/1000}} </div>
                     </div>
                     <div class="down">
-                            <div class="lf">2019.11.01</div>
-                            <div class="rt">3.225BFB</div> 
+                            <div class="lf">{{item.createDate|formatDateToYear}}</div>
+                            <div class="rt">{{item.pledgeAmount/1000}}FB</div> 
                     </div>
                 </li>
             
@@ -28,40 +28,34 @@
   </div>
 </template>
 <script>
-import { myIncomeRecode } from "@/config";
+import { myIncomeRecode } from "@/api";
 export default {
   data() {
     return {
       recordList: [],
-      time: "",
-      totalAmount: 0,
-      totalIncome: 0,
-      date: ""
+      totalAmount: '',
+      totalIncome: '',
     };
   },
-  methods: {
-    formatDateToYear(date) {
+  filters:{
+         formatDateToYear(date) {
       /* 格式化时间根据空格左边为年月日，右边为时分秒 */
-
       try {
         return date.split(" ")[0];
       } catch (error) {
         return date;
       }
     },
-    getYearMonthDay() {
-      var date = new Date();
-    let  Y = date.getFullYear() + "-";
-    let  M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-    let   D = date.getDate() + " ";
-      this.date = Y + M + D;
-    }
   },
-  mounted() {
-
+  methods: {
+  
+  },
+  created() {
+       myIncomeRecode(this.imtokenAddress).then(res=>{
+          this.totalAmount=(res.data.totalAmount/1000).toFixed(3);
+         this.totalIncome=(res.data.totalIncome).toFixed(3);
+         this.recordList=res.data.incomeRecodes;
+       })
   }
 };
 </script>
@@ -69,7 +63,6 @@ export default {
 .recorddetail {
   height: 100%;
   background: #F5F5F5;
-  overflow: hidden;
 }
 .logo-box{
   display: flex;
@@ -84,6 +77,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 .icon-logo-wrap .lf-icon{
   width: 60px;

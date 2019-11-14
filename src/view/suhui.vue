@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import { getNodeRedeem, personalAssest } from "@/config";
+// import { getNodeRedeem, personalAssest } from "@/api";
 import Alert from "@/components/alert.vue";
 import LoGo from "@/components/logo.vue";
 export default {

@@ -9,27 +9,27 @@
         </div>
         <div class="tit2">
           <div class="left">
-            0xewterstgsdf56ers
+            {{hiddenMidAddress}}
             <i></i>
           </div>
-          <div class="right">~￥6000 DNT</div>
+          <div class="right">≈￥6000 DNT</div>
         </div>
         <!-- <div class="dottod"></div> -->
       </div>
       <div class="card2">
         <div class="tit sm">
           <div class="left">DNT总资产</div>
-          <div class="right">32000 DNT</div>
-          <div class="sm-tit">￥9000</div>
+          <div class="right">{{totalAssetsDNT}} DNT</div>
+          <div class="sm-tit">￥{{CNY}}</div>
         </div>
 
         <div class="tit">
           <div class="left">BFB总资产</div>
-          <div class="right">3.225BFB</div>
+          <div class="right">{{totalAssetsBFB}}BFB</div>
         </div>
         <div class="tit">
           <div class="left">累计收益</div>
-          <div class="right">3.225BFB</div>
+          <div class="right">{{totalIncome}}BFB</div>
         </div>
       </div>
     </div>
@@ -47,99 +47,26 @@
       </div>
     </div>
     <!-- middle logo end -->
-
-    <div class="sub-list">
-      <ul>
-        
-        <li>
-             <mu-ripple   >
-          <div class="top">
-            <div class="tit1">
-              <div class="left">1585150DNT</div>
-              <div class="right">100DNT:3BFB</div>
-            </div>
-            <div class="tit2">
-              <div class="left">
-                DNT投入总量
-                <i></i>
-              </div>
-              <div class="right">BFB年化收益</div>
-            </div>
-          </div>
-          <div class="bottom">
-            <div class="left">
-              <div class="tit4">我的投入</div>
-              <div class="tit5">120000000 DNT</div>
-            </div>
-            <div class="mid">
-              <div class="tit4">昨日收益</div>
-              <div class="tit5">3.225 BFB</div>
-            </div>
-            <div class="right">
-              <div class="tit4">预计收益(天)</div>
-              <div class="tit5">3.225 BFB</div>
-            </div>
-          </div>
-           </mu-ripple>
-        </li>
-        <li>
-          <div class="top">
-            <div class="tit1">
-              <div class="left">1585150DNT</div>
-              <div class="right">100DNT:3BFB</div>
-            </div>
-            <div class="tit2">
-              <div class="left">
-                DNT投入总量
-                <i></i>
-              </div>
-              <div class="right">BFB年化收益</div>
-            </div>
-          </div>
-          <div class="bottom">
-            <div class="left">
-              <div class="tit4">我的投入</div>
-              <div class="tit5">120000000 DNT</div>
-            </div>
-            <div class="mid">
-              <div class="tit4">昨日收益</div>
-              <div class="tit5">3.225 BFB</div>
-            </div>
-            <div class="right">
-              <div class="tit4">预计收益(天)</div>
-              <div class="tit5">3.225 BFB</div>
-            </div>
-          </div>
-        </li>
-    
-      </ul>
-    </div>
+<NodeDetail></NodeDetail>
   </div>
 </template>
 
 <script>
-// import NodeList from "@/components/homeListNode.vue";
-import { personalAssest, getMyNodeList, getNovaCNY } from "@/config";
+ import NodeDetail from "@/components/homedetail.vue";
+import { personalAssest, getDNTCNY } from "@/api";
 export default {
   components: {
-    // NodeList
+   NodeDetail
   },
   name: "index",
   data() {
     return {
-      deg: 0,
-      zh: "中文",
-      en: "English",
-      switchstate: false,
+      CNY:'',
       nodeaddress: this.imtokenAddress,
-      balance: "",
-      ETH: 0,
-      pendingAmount: "",
-      totalAssets: "",
-      totalIncome: "",
-      yesterdayIncome: "",
-      nodelistdata: [],
-      CNY: ""
+      totalAssetsDNT:'',
+      totalAssetsBFB:'',
+      totalIncome:'',
+      dntBalance:''
     };
   },
   computed: {
@@ -150,17 +77,22 @@ export default {
   beforeCreate() {},
   methods: {
     gotoList() {
-      if (window.ethereum) {
-        imToken.callAPI("native.showLoading", "loading...");
-      }
       this.$router.push({ path: "/nodeswiper" });
     }
   },
-  mounted() {
-    getNovaCNY().then(res => {
+  created() {
+  //  this.$confirm('Hello world ?', 'Confirm');
+  personalAssest(this.imtokenAddress).then(res=>{
+      this.totalAssetsDNT=(res.data.totalAssetsDNT/1000).toFixed(3)
+      this.totalAssetsBFB=(res.data.totalAssetsBFB/1000).toFixed(3)
+      this.totalIncome=(res.data.totalIncome/1000).toFixed(3)
+      this.dntBalance=(res.data.dntBalance/1000).toFixed(3);
+       getDNTCNY().then(ret => {
       /* nova转人民币汇率 */
-      this.CNY = res.data.data.cny;
+      this.CNY =( res.data.totalAssetsDNT/1000*ret.data.cny).toFixed(3);
     });
+  })
+
   }
 };
 </script>
@@ -288,82 +220,5 @@ export default {
   background: url("../assets/img/bfblogo@2x.png") no-repeat;
   background-size: 100% 100%;
 }
-.sub-list {
-  width: 95%;
-  margin: 0 auto;
-  margin-top: 15px;
-}
-.sub-list ul {
-  padding: 0;
-}
-.sub-list li {
-    position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 25px auto;
-  border-radius: 8px;
-  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.16);
-  overflow: hidden;
-}
-li .top {
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  background: url("../assets/img/list-bg@2x.png") no-repeat;
-  background-size: 120% 140%;
-  background-position: center center;
-  color: #fff;
-}
-li .top .tit1 .left {
-  font-size: 15px;
-  padding-left: 15px;
-}
-li .top .tit1 .right {
-  font-size: 15px;
-  padding-right: 15px;
-}
-li .top .tit2 .left {
-  font-size: 12px;
-  padding-left: 15px;
-  font-weight: 300;
-}
-li .top .tit2 .right {
-  font-size: 12px;
-  padding-right: 15px;
-  font-weight: 300;
-}
-li .top .tit1,
-li .top .tit2 {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-li .bottom {
-  height: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background: #e9e9e9;
-  color: rgba(0, 0, 0, 1);
-}
-li .bottom .tit4 {
-  font-size: 12px;
-}
-li .bottom .tit5 {
-  font-size: 14px;
-}
-li .bottom .left {
-  padding-left: 15px;
-}
-li .bottom .right {
-  padding-right: 15px;
-}
-li .bottom .left,
-li .bottom .mid,
-li .bottom .right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
+
 </style>

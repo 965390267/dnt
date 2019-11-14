@@ -4,17 +4,17 @@
 
     <div class="list-wrap">
             <ul>
-                <li>
+                <li v-for="(item,index) in recordList" :key='index'>
                     <div class="top">
                         <div class="lf">质押DNT</div>
                         <div class="rt">质押成功<i class="icon"></i> </div>
                     </div>
                     <div class="down">
-                            <div class="lf">2019.11.01 00:00:00</div>
+                            <div class="lf">{{item.date|formatDateToYear}}</div>
                             <div class="rt">1200.368DNT</div> 
                     </div>
                 </li>
-                 <li>
+                 <!-- <li>
                     <div class="top">
                         <div class="lf">质押DNT</div>
                         <div class="rt">质押成功<i class="icon"></i> </div>
@@ -33,25 +33,21 @@
                             <div class="lf">2019.11.01 00:00:00</div>
                             <div class="rt">1200.368DNT</div> 
                     </div>
-                </li>
+                </li> -->
             </ul>
                </div>
   </div>
 </template>
 <script>
-import { myIncomeRecode } from "@/config";
+import { recentTransactions } from "@/api";
 export default {
   data() {
     return {
       recordList: [],
-      time: "",
-      totalAmount: 0,
-      totalIncome: 0,
-      date: ""
     };
   },
-  methods: {
-    formatDateToYear(date) {
+  filters:{
+   formatDateToYear(date) {
       /* 格式化时间根据空格左边为年月日，右边为时分秒 */
 
       try {
@@ -60,19 +56,14 @@ export default {
         return date;
       }
     },
-    getYearMonthDay() {
-      var date = new Date();
-    let  Y = date.getFullYear() + "-";
-    let  M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-    let   D = date.getDate() + " ";
-      this.date = Y + M + D;
-    }
+  },
+  methods: {
+
   },
   mounted() {
-
+         recentTransactions(this.imtokenAddress).then(res=>{
+           this.recordList=res.data;
+         })
   }
 };
 </script>
@@ -80,7 +71,6 @@ export default {
 .recorddetail {
   height: 100%;
   background: #F5F5F5;
-  overflow: hidden;
 }
 .tit{
     font-size: 16px;

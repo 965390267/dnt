@@ -32,7 +32,7 @@
 <script>
 import loading from "@/components/loading";
 import LoGo from "@/components/logo";
-import { getNodePledge, personalAssest, getGas } from "@/config";
+// import { getNodePledge, personalAssest, getGas } from "@/api";
 export default {
   components: {LoGo},
   data() {
@@ -462,10 +462,10 @@ export default {
     }
   },
   mounted() {
-    this.initData(); /* 数据初始化 */
-    getGas().then(res => {
-      this.gasPrice = res.data.data.gas / 1000000000000000000;
-    });
+    // this.initData(); /* 数据初始化 */
+    // getGas().then(res => {
+    //   this.gasPrice = res.data.data.gas / 1000000000000000000;
+    // });
   }
 };
 </script>

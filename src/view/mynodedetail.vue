@@ -16,14 +16,61 @@
         <p class="gg">投入DNT，每日坐享BFB收益。</p>
         <p class="gg"> DNT交易所网址：www.bbkx.com</p>
     </div>
-   
+     <!-- 没有记录时候 -->
     <div class="record">
-            <div class="lf-record">收益记录</div>
-            <div class="rt-record">交易记录</div>
+         <div class="lf-record"> <router-link :to="{path:'/moneyrecord'}">收益记录</router-link></div>
+          <div class="rt-record"> <router-link :to="{path:'/recentrecord'}">交易记录</router-link></div>            
     </div>
+    <!-- 没有记录时候 -->
+    <!-- 有记录 -->
+     <div class="record-list">
+       <ul>
+         <li>
+           <div class="lf">
+             <div class="up">12000DNT</div>
+             <div class="down">我的投入数量</div>
+           </div>
+           <div class="rt">
+             交易记录 <i class="back"></i>
+           </div>
+         </li>
+         <li>
+           <div class="lf">
+             <div class="up">3.225BFB</div>
+             <div class="down">累计收益</div>
+           </div>
+           <div class="rt">
+             交易记录 <i class="back"></i>
+           </div>
+         </li>
+       </ul>
+     </div>
+     <!-- 有记录 -->
+     <!-- btn group -->
+    <div class="btn-group">
+     <div class="btn highlight">   <mu-ripple> 投入</mu-ripple></div> 
+      <div class="btn normalbtn">赎回DNT</div>
+      <div class="btn normalbtn">提现BFB</div>
+    </div>
+      <!-- btn group -->
+      <!-- list -->
+      <div class="package">
+        <ul>
+          <li>
+            <div class="up">
+              <div class="lf">DNT赎回中</div>
+              <div class="rt">交易正在打包</div>
+            </div>
+              <div class="down">
+              <div class="lf">2019.01.01 23：13：58</div>
+              <div class="rt">1200DNT</div>
+            </div>
+          </li>
+        </ul>
+      </div>
     <div class="btn-wrap">
-    <div class="btn">
-            投入
+    <div class="btn fullwidth">
+      <mu-ripple > 投入</mu-ripple>
     </div>
     </div>
 
@@ -31,7 +78,7 @@
 </template>
 
 <script>
-import { recentTransactions, myNodeDetail,cancelNodeRedeem } from "@/config";
+// import { recentTransactions, myNodeDetail,cancelNodeRedeem } from "@/api";
 export default {
   data() {
     return {
@@ -64,14 +111,15 @@ export default {
     }
   },
   created() {
-  this.initData()
+  // this.initData()
    
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped >
+<style lang="scss" scoped >
+
 .card{
   width: 95%;
   margin: 0 auto;
@@ -153,24 +201,96 @@ color: #fff;
   width: 100%;
   background: #000;
 }
+.record-list{
+  margin-top: 30px;
+}
+.record-list li{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  width: 95%;
+  margin: 16px auto;
+  padding: 0 15px;
+  border:1px solid rgba(112,112,112,1);
+box-shadow:0px 3px 6px rgba(0,0,0,0.3);
+border-radius:4px;
+}
+.record-list li .down{
+  padding-top: 5px;
+}
+.back{
+  display: inline-block;
+  background: url('../assets/img/back@2x.png') no-repeat;
+  background-size: contain;
+  width: 7px;
+  height: 13px;
+}
+/* 按钮 */
 .btn-wrap{
   position: absolute;
   bottom: 20px;
   left: 0;
   width: 100%;
 }
+.btn-group{
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
 .btn{
-
- width:349px;
+  position: relative;
+ width:107px;
 height:48px;
 margin: 0 auto;
-background:linear-gradient(131deg,rgba(38,38,107,1) 0%,rgba(19,24,36,1) 100%);
-box-shadow:0px 3px 6px rgba(0,0,0,0.55);
 opacity:1;
 border-radius:24px;
 text-align: center;
 color: #fff;
 line-height: 48px;
 font-size: 17px;
+}
+.fullwidth{
+   width:349px;
+height:48px;
+background:linear-gradient(131deg,rgba(38,38,107,1) 0%,rgba(19,24,36,1) 100%);
+box-shadow:0px 3px 6px rgba(0,0,0,0.55);
+}
+.highlight{
+  background:linear-gradient(131deg,rgba(38,38,107,1) 0%,rgba(19,24,36,1) 100%);
+box-shadow:0px 3px 6px rgba(0,0,0,0.55);
+color: #fff;
+font-size:15px;
+}
+.normalbtn{
+  color:rgba(23,27,53,1);
+  border:1px solid rgba(26,29,62,1);
+font-size:15px;
+  box-shadow:0px 3px 6px rgba(0,0,0,0.16);
+}
+/* btn  list*/
+/* packing */
+.package {
+  margin-top: 25px;
+}
+.package li{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height:66px;
+background:rgba(210,210,210,1);
+
+}
+.package li .up,.package li .down{
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 10px;
+font-size:14px;
+font-weight:400;
+color:rgba(23,27,53,1);
+}
+
+.package li .down{
+font-size:12px;
 }
 </style>

@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '*':{
-        target:'https://novastaking.com/',
+        target:'https://dnt.network',
         changeOrigin:true,
         secure: true,
         // pathRewrite:{

@@ -1,28 +1,48 @@
 import axios from 'axios'
+import Vue from 'vue'
+import Toast from 'muse-ui-toast';
+import Loading from 'muse-ui-loading';
 
-// export const baseurl='http://106.15.52.35:8080/' 
-  //  axios.defaults.baseURL ="https://39.97.184.19:443/"
-if (env() == 'production') {
-  // axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
-  axios.defaults.baseURL = location.origin+'/'
-  //"https://www.novastaking.com/"
-}else{
-  axios.defaults.baseURL = location.origin+'/'
-
-}
+import 'muse-ui-loading/dist/muse-ui-loading.css';
+Vue.use(Toast,{
+  position: 'top',               // 弹出的位置
+  time: 2000,                       // 显示的时长
+  closeIcon: '',               // 关闭的图标
+  close: false,                      // 是否显示关闭按钮
+  successIcon: '',      // 成功信息图标
+  infoIcon: '',                 // 信息信息图标
+  warningIcon: '',     // 提醒信息图标
+  errorIcon: ''              // 错误信息图标
+});
+Vue.use(Loading,{
+  overlayColor: 'rgba(0, 0, 0, .7)',        // 背景色
+  size: 20,
+  color: 'primary',                           // color
+  text:'数据加载中',
+  className: '' ,
+  target:document.body
+});
+// // export const baseurl='http://106.15.52.35:8080/' 
+//   // axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
+  axios.defaults.baseURL = env() == 'production'?location.origin+'/':'https://dnt.network';
 // axios.defaults.timeout = 10000;
 function env() {
   if (process.env.NODE_ENV === "development") return "development";   //开发环境
   if (window.location.href.includes('192.168')) return 'test';        //测试环境，"192.168"根据实际情况而定
   return 'production'                                                 //线上环境
 }
-
+let loading =null;
 // 添加请求拦截器
 axios.interceptors.request.use((config) => {
   // 在发送请求之前做些什么
+  if(!loading){//muse ui小bug，不能同时实例化多个，否则可能关闭不了，所以需要先判断，如果已经有了就不能再创建loading
+    loading = Loading();
+  }
+
   return config;
 }, function (error) {
   // 对请求错误做些什么
+  loading&&loading.close();
   console.log(error);
   return Promise.reject(error);
 });
@@ -30,182 +50,44 @@ axios.interceptors.request.use((config) => {
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
+  loading&&loading.close();
   console.log(response);
   const res = response.data
   if (!res.success) {
-    alert(res.msg||'请求出错，正在修复中')
+    Toast.warning(res.msg||'出点小问题，再试一次');
   }
-
-  return response;
+  return res;
 }, function (error) {
   // 对响应错误做点什么
   console.log(error);
-  
+  loading&&loading.close();
   if (error && error.response) {
-    // alert(error.response.data.msg)
 console.log(error.response);
 
     switch (error.response.status) {
       case 400:
-        alert('错误请求')
+          Toast.error('错误请求');
         break;
       case 401:
-        alert('未授权，请重新登录')
+          Toast.error('未授权，请重新登录');   
         break;
       case 403:
-        alert('拒绝访问')
+          Toast.error('拒绝访问');      
         break;
       case 404:
-          alert('出错啦，网络未响应，稍后再试')
+          Toast.error('出错啦，网络未响应，稍后再试');   
         break;
       case 405:
-          alert('请求方法未允许')
+          Toast.error('请求方法未允许'); 
         break;
         case 500:
-          alert('出错啦，服务器维修中')
+            Toast.error('出错啦，服务器维修中'); 
           break;
-         default: alert('出错啦，专业人员正在修复中')
+         default:  Toast.error('出错啦，专业人员正在修复中'); 
       }
   }
   return Promise.reject(error);
 });
-/** 
- * @request {POST}
- * @param {nodeId}
- * @param {toAddress}
- *  @param {amount}
- *  @param {type}
- * //赎回接口
-*/
-export function getNodeRedeem(data) {
-  return axios.post('api/nodeRedeem', data);
-}
 
 
-/** 
-* @request {POST}
-* @param {fromAddress}
-* @param {nodeId}
-*  @param {amount}
-*  @param {txnHash}
-* //质押接口
-*/
-export function getNodePledge(data) {
-  return axios.post('api/nodePledge', data);
-}
-
-
-/** 
- * @request {GET}
- * @param {address}
- * //节点列表接口
-*/
-export function getMyNodeList(address) {
-  return axios(`api/myNodeList?address=${address}`);
-}
-
-/** 
- * @request {GET}
- * @param {address}
- * //生效未生效节点列表接口
-*/
-export function nodeList(address) {
-  return axios(`api/nodeList?address=${address}`);
-}
-
-/** 
-* @request {GET}
-* @param {address}
-@param {nodeId}
-* //最近交易接口
-*/
-export function recentTransactions(userAddress, nodeId) {
-  return axios(`api/recentTransactions?userAddress=${userAddress}&nodeId=${nodeId}`);
-}
-
-
-/** 
-* @request {GET}
-* @param {address}
-* @param {nodeId}
-* //我的节点详情接口
-*/
-export function myNodeDetail(nodeId, address) {
-  return axios(`api/myNodeDetail?nodeId=${nodeId}&address=${address}`);
-}
-
-/** 
-* @request {GET}
-* @param {address}
-* 
-* //个人总资产接口
-*/
-export function personalAssest(address) {
-
-  return axios(`api/personalAssest?address=${address}`);
-}
-
-/** 
-* @request {GET}
-* @param {address}
-* @param {nodeId}
-* //我的收益记录
-*/
-export function myIncomeRecode(nodeId, address) {
-
-  return axios(`api/myIncomeRecode?nodeId=${nodeId}&address=${address}`);
-}
-/** 
-* @request {POST}
-* @param {body}
-* {
-*  "nodeId":"22",
-"toAddress":"0x6E746901b6675a9AE97e3458D9F45d424bFCd908",
-"transactionId":"384"
-* }
-* 
-* //撤销普通赎回/质押转换
-*/
-export function cancelNodeRedeem(data) {
-  return axios.post(`api/cancelNodeRedeem`,data);
-}
-
-
-/** 
-* @request {GET}
-* @param {none}
-* 
-* //获取NOVA汇率
-*/
-export function getNovaCNY() {
-
-  return axios(`api/getNovaCNY`);
-}
-
-/** 
-* @request {GET}
-* @param {none}
-* 
-* //获取矿工费
-*/
-export function getGas() {
-
-  return axios(`api/getGas`);
-}
-
-
-/** 
-* @request {POST}
-* @param {body}
-* {
-  "userAddress":"0x6E746901b6675a9AE97e3458D9F45d424bFCd908",
-  "oldNodeId":"22",
-  "newNodeId":"23",
-  "amount":"10000"
-}
-* //质押转换
-*/
-export function changePledge(data) {
-
-  return axios.post(`api/changePledge`,data);
-}
+export default axios;

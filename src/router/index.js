@@ -10,7 +10,7 @@ Vue.use(Router)
       name: 'index',
       component:()=>import('@/view/index'),
       meta:{
-        title:'Nova 质变'
+        title:'DNT双轨经济生态'
       }
     },
 
@@ -19,7 +19,7 @@ Vue.use(Router)
       name: 'zhiya',
       component:()=>import('@/view/ziya'),
       meta:{
-        title:'Nova 质变'
+        title:'DNT双轨经济生态'
       }
     }
     ,
@@ -28,7 +28,7 @@ Vue.use(Router)
       name: 'suhui',
       component:()=>import('@/view/suhui'),
       meta:{
-        title:'Nova 质变'
+        title:'DNT双轨经济生态'
       }
     }
     ,
@@ -37,7 +37,7 @@ Vue.use(Router)
       name: 'mynodedetail',
       component:()=>import('@/view/mynodedetail'),
       meta:{
-        title:'Nova 质变'
+        title:'DNT双轨经济生态'
       }
     },
     {

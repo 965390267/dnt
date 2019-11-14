@@ -35,10 +35,7 @@ let loading =null;
 // 添加请求拦截器
 axios.interceptors.request.use((config) => {
   // 在发送请求之前做些什么
-  if(!loading){//muse ui小bug，不能同时实例化多个，否则可能关闭不了，所以需要先判断，如果已经有了就不能再创建loading
-    loading = Loading();
-  }
-
+  !loading&&(loading = Loading());//muse ui小bug，不能同时实例化多个，否则可能关闭不了，所以需要先判断，如果已经有了就不能再创建loading
   return config;
 }, function (error) {
   // 对请求错误做些什么

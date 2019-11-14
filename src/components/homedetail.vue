@@ -52,12 +52,12 @@ export default {
     },
     created(){
            myNodeDetail(this.imtokenAddress).then(res=>{
-              this.pledgeAmout=(res.data.pledgeAmout).toFixed(3)
-              this.returnRate=(res.data.returnRate).toFixed(3)
-              this.todayIncome=(res.data.todayIncome).toFixed(3)
-              this.totalIncome=(res.data.totalIncome).toFixed(3)
-              this.totalPledgeAmout=(res.data.totalPledgeAmout).toFixed(3)
-              this.yesterdayIncome=(res.data.yesterdayIncome).toFixed(3)
+              this.pledgeAmout=(res.data.pledgeAmout/1000).toFixed(3)
+              this.returnRate=(res.data.returnRate/1000).toFixed(3)
+              this.todayIncome=(res.data.todayIncome/1000).toFixed(3)
+              this.totalIncome=(res.data.totalIncome/1000).toFixed(3)
+              this.totalPledgeAmout=(res.data.totalPledgeAmout/1000).toFixed(3)
+              this.yesterdayIncome=(res.data.yesterdayIncome/1000).toFixed(3)
    })
     }
 }

@@ -48,7 +48,7 @@
      <!-- 有记录 -->
      <!-- btn group -->
     <div class="btn-group">
-     <div class="btn highlight">   <mu-ripple> 投入</mu-ripple></div> 
+     <div class="btn highlight"> <router-link :to="{path:'/zhiya'}"><mu-ripple style='color:#fff'> 投入</mu-ripple></router-link>  </div> 
       <div class="btn normalbtn">赎回DNT</div>
       <div class="btn normalbtn">提现BFB</div>
     </div>

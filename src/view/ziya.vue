@@ -37,13 +37,8 @@ export default {
   components: {LoGo},
   data() {
     return {
-      initDataObj: {
-        balance: 0
-      },
       amount: "" /* 用户输入的Nova数量，提交需要*1000 */,
-      show: false,
       gasPrice: 0,
-      lockSubmit: true
     };
   },
   watch: {
@@ -52,10 +47,6 @@ export default {
         this.amount = Number(
           val.toString().substring(0, val.toString().length - 1)
         );
-        return imToken.callAPI(
-          "native.toastInfo",
-          this.$t("shuhui.amountLimit")
-        );
       }
     }
   },
@@ -63,18 +54,21 @@ export default {
     get() {
       this.show = true;
       this.amount = Number(this.amount);
-
-      if (this.amount == 0) return alert(this.$t("zhiya.numbernotzero"));
+      if (this.amount == 0) return this.$alert('数量必须大于0', '提示', {
+        okLabel: '确定'
+      });
       if (!this.$route.query.nodeId) {/* 地址必须存在 */
-        alert(this.$t("zhiya.nogetaddress"));
+      this.$alert('地址不存在，请退出重试', '提示', {
+        okLabel: '确定'
+      });
         return this.$router.back(-1);
       }
       if (!this.imtokenAddress) {
-        alert(this.$t("zhiya.noauthtoken"));
+       this.$alert('未成功授权，请退出重试', '提示', {
+        okLabel: '确定'
+      });
         return this.$router.back(-1);
       }
-      // this.bus.$emit('loading',true)
-      imToken.callAPI("native.showLoading", "loading...");
       var abi = [
         {
           constant: true,
@@ -362,16 +356,13 @@ export default {
       // })
       // 20000000是20Nova，要乘6个0
       // 质押 质押按钮触发这个 function transferNova(provider, novaAbi, toAddress, amountOfNova, gasPrice, novaAddress, callBackTransfer)
-      if (this.lockSubmit) {
-        this.lockSubmit = false;
         transferNova(
           web3.currentProvider,
           abi,
           this.$route.query.address,
           Number(this.amount) * 1000,
           "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6",
-          hash => {
-           
+          hash => {       
             this.lockSubmit = true;
              if (window.ethereum) {
             imToken.callAPI("native.hideLoading");
@@ -385,14 +376,7 @@ export default {
             this.lockSubmit = true;
           }
         );
-      }
-    let timer=  setTimeout(()=>{
-       timer=null;
-        this.lockSubmit = true;
-         if (window.ethereum) {
-          imToken.callAPI("native.hideLoading");
-         }
-      },2000)
+
       // 查询Nova余额触发这个 function balanceOfNova(provider, novaAbi, queryAddress, novaAddress, callBackBalance)
       // balanceOfNova(
       //   web3.currentProvider,
@@ -408,57 +392,29 @@ export default {
     pay(hash) {
       var obj = {
         fromAddress: this.imtokenAddress, //转入方是自己的地址
-        nodeId: this.$route.query.nodeId, //转入方
         amount: Number(this.amount) * 1000,
         txnHash: hash
       };
       getNodePledge(obj)
         .then(res => {
           // alert(JSON.stringify(res));
-          if (res.data.success) {
-            alert(this.$t("zhiya.zhiyanodealert"));
-            this.show = false;
+          if (res.success) {
             this.$router.back(-1);
           }
         })
-        .catch(err => {
-
-          this.show = false;
-        });
     },
     setAll() {
       personalAssest(this.imtokenAddress)
         .then(res => {
-          var res = res.data;
-          if (res.success) {
             this.initDataObj = res.data;
             this.amount = Number(res.data.balance) / 1000;
-          } else {
-            Promise.reject(ret);
-          }
         })
-        .catch(err => {
-           if (window.ethereum) {
-          imToken.callAPI("native.hideLoading");
-           }
-          this.show = false;
-        });
     },
     initData() {
       /* 初始的页面数据获取 */
       personalAssest(this.imtokenAddress).then(res => {
-        var res = res.data;
-        if (res.success) {
           this.initDataObj = res.data;
-        }
       });
-      //        var eth = new Eth(web3.currentProvider);
-      //       eth.estimateGas({
-      //         to: this.$route.query.address,
-      //         data: "0xb48b7e5bf6563b3e0a85055821a83deb8cfc12f6"
-      //       }).then(res=>{
-      // this.gasPrice =res
-      //       })
     }
   },
   mounted() {

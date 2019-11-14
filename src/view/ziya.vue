@@ -24,7 +24,7 @@
     </div>
    <div class="btn-wrap">
     
-     <div class="btn"> <mu-ripple class="mu-ripple-demo demo-3"  :opacity="0.5">确定 </mu-ripple></div>
+     <div class="btn"  v-loading="btnloading" data-mu-loading-size="28"> <mu-ripple class="mu-ripple" @click="get()"   :opacity="0.5">确定 </mu-ripple></div>
  
    </div>
   </div>
@@ -39,6 +39,7 @@ export default {
     return {
       amount: "" /* 用户输入的Nova数量，提交需要*1000 */,
       gasPrice: 0,
+      btnloading:false
     };
   },
   watch: {
@@ -52,7 +53,8 @@ export default {
   },
   methods: {
     get() {
-      this.show = true;
+      this.btnloading=true;
+     return false;
       this.amount = Number(this.amount);
       if (this.amount == 0) return this.$alert('数量必须大于0', '提示', {
         okLabel: '确定'
@@ -496,7 +498,9 @@ line-height: 18px;
   left: 0;
   width: 100%;
 }
+
 .btn{
+  position: relative;
  width:349px;
 height:48px;
 margin: 0 auto;
@@ -508,6 +512,7 @@ text-align: center;
 color: #fff;
 line-height: 48px;
 font-size: 17px;
+overflow: hidden;
 }
 </style>
 

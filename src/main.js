@@ -12,6 +12,9 @@ import '@/assets/css/reset.css'
 import Helpers from 'muse-ui/lib/Helpers';
 import Message from 'muse-ui-message';
 import option from './messageconf'
+import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css
+import Loading from 'muse-ui-loading';
+Vue.use(Loading);
 Vue.use(Button).use(Dialog).use(Snackbar).use(Icon).use(Progress).use(TextField).use(Helpers).use(Message,option);
 
 Vue.config.productionTip = false

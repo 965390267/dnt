@@ -14,11 +14,11 @@ import axios from '@/config'
  * //赎回接口
 */
 export function getNodeRedeem(data) {
-    return axios.post('api/nodeRedeem', data);
-  }
-  
-  
-  /** 
+  return axios.post('api/nodeRedeem', data);
+}
+
+
+/** 
   * @request {POST}
   * @param {fromAddress}
   *  @param {amount}
@@ -31,12 +31,12 @@ export function getNodeRedeem(data) {
 }
   * //质押接口
   */
-  export function getNodePledge(data) {
-    return axios.post('api/nodePledge', data);
-  }
-  
-  
-  /** 
+export function getNodePledge(data) {
+  return axios.post('api/nodePledge', data);
+}
+
+
+/** 
   * @request {GET}
   * @param {address}
   * @return {
@@ -49,12 +49,12 @@ export function getNodeRedeem(data) {
 }
   * //最近交易接口
   */
-  export function recentTransactions(userAddress) {
-    return axios(`api/recentTransactions?userAddress=${userAddress}`);
-  }
-  
-  
-  /** 
+export function recentTransactions(userAddress) {
+  return axios(`api/recentTransactions?userAddress=${userAddress}`);
+}
+
+
+/** 
   * @request {GET}
   * @param {address}
   * @return {
@@ -74,14 +74,14 @@ export function getNodeRedeem(data) {
 }
   * //我的节点详情接口
   */
-  export function myNodeDetail(address) {
-    return axios(`api/myNodeDetail?address=${address}`);
-  }
-  
+export function myNodeDetail(address) {
+  return axios(`api/myNodeDetail?address=${address}`);
+}
 
 
-  
-  /** 
+
+
+/** 
   * @request {GET}
   * @param {address}
   * @return {
@@ -97,15 +97,15 @@ export function getNodeRedeem(data) {
 }
   * //个人总资产接口
   */
-  export function personalAssest(address) {
-  
-    return axios(`api/personalAssest?address=${address}`);
-  }
-  
+export function personalAssest(address) {
+
+  return axios(`api/personalAssest?address=${address}`);
+}
 
 
 
-  /** 
+
+/** 
   * @request {GET}
   * @param {address}
   * @return {
@@ -120,15 +120,15 @@ export function getNodeRedeem(data) {
 }
   * //我的收益记录
   */
-  export function myIncomeRecode(address) {
-  
-    return axios(`api/myIncomeRecode?address=${address}`);
-  }
-  
+export function myIncomeRecode(address) {
+
+  return axios(`api/myIncomeRecode?address=${address}`);
+}
 
 
 
-  /** 
+
+/** 
   * @request {GET}
   * @param {none}
   * @return {
@@ -141,15 +141,15 @@ export function getNodeRedeem(data) {
 }
   * //获取矿工费
   */
-  export function getGas() {
-  
-    return axios(`api/getGas`);
-  }
-  
+export function getGas() {
+
+  return axios(`api/getGas`);
+}
 
 
 
-  /** 
+
+/** 
   * @request {GET}
   * @param {none}
   * @return {
@@ -162,8 +162,7 @@ export function getNodeRedeem(data) {
 }
   * //获取DNT汇率
   */
-  export function getDNTCNY() {
-  
-    return axios(`api/getDNTCNY`);
-  }
-  
+export function getDNTCNY() {
+
+  return axios(`api/getDNTCNY`);
+}

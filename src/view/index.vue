@@ -5,14 +5,14 @@
       <div class="card1">
         <div class="tit1">
           <div class="left">DNT Wallet</div>
-          <div class="right">2000 DNT</div>
+          <div class="right">{{totalAssetsDNT}} DNT</div>
         </div>
         <div class="tit2">
           <div class="left">
             {{hiddenMidAddress}}
             <i></i>
           </div>
-          <div class="right">≈￥6000 DNT</div>
+          <div class="right">≈￥{{CNY}} DNT</div>
         </div>
         <!-- <div class="dottod"></div> -->
       </div>
@@ -47,26 +47,26 @@
       </div>
     </div>
     <!-- middle logo end -->
-<NodeDetail></NodeDetail>
+    <NodeDetail></NodeDetail>
   </div>
 </template>
 
 <script>
- import NodeDetail from "@/components/homedetail.vue";
+import NodeDetail from "@/components/homedetail.vue";
 import { personalAssest, getDNTCNY } from "@/api";
 export default {
   components: {
-   NodeDetail
+    NodeDetail
   },
   name: "index",
   data() {
     return {
-      CNY:'',
+      CNY: "",
       nodeaddress: this.imtokenAddress,
-      totalAssetsDNT:'',
-      totalAssetsBFB:'',
-      totalIncome:'',
-      dntBalance:''
+      totalAssetsDNT: "",
+      totalAssetsBFB: "",
+      totalIncome: "",
+      dntBalance: ""
     };
   },
   computed: {
@@ -76,23 +76,20 @@ export default {
   },
   beforeCreate() {},
   methods: {
-    gotoList() {
-      this.$router.push({ path: "/nodeswiper" });
-    }
+
   },
   created() {
-  //  this.$confirm('Hello world ?', 'Confirm');
-  personalAssest(this.imtokenAddress).then(res=>{
-      this.totalAssetsDNT=(res.data.totalAssetsDNT/1000).toFixed(3)
-      this.totalAssetsBFB=(res.data.totalAssetsBFB/1000).toFixed(3)
-      this.totalIncome=(res.data.totalIncome/1000).toFixed(3)
-      this.dntBalance=(res.data.dntBalance/1000).toFixed(3);
-       getDNTCNY().then(ret => {
-      /* nova转人民币汇率 */
-      this.CNY =( res.data.totalAssetsDNT/1000*ret.data.cny).toFixed(3);
+    //  this.$confirm('Hello world ?', 'Confirm');
+    personalAssest(this.imtokenAddress).then(res => {
+      this.totalAssetsDNT = (res.data.totalAssetsDNT / 1000).toFixed(3);
+      this.totalAssetsBFB = (res.data.totalAssetsBFB / 1000).toFixed(3);
+      this.totalIncome = (res.data.totalIncome / 1000).toFixed(3);
+      this.dntBalance = (res.data.dntBalance / 1000).toFixed(3);
+      getDNTCNY().then(ret => {
+        /* nova转人民币汇率 */
+        this.CNY = ((res.data.totalAssetsDNT / 1000) * ret.data.cny).toFixed(3);
+      });
     });
-  })
-
   }
 };
 </script>
@@ -220,5 +217,4 @@ export default {
   background: url("../assets/img/bfblogo@2x.png") no-repeat;
   background-size: 100% 100%;
 }
-
 </style>

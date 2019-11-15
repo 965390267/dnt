@@ -11,19 +11,22 @@ import 'muse-ui/lib/styles/theme.less';
 import '@/assets/css/reset.css'
 import Helpers from 'muse-ui/lib/Helpers';
 import Message from 'muse-ui-message';
-import option from './messageconf'
+import option from './config/messageconf'
 import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css
 import Loading from 'muse-ui-loading';
 Vue.use(Loading,{
-  overlayColor: 'rgba(0, 0, 0, .7)',        // 背景色
+  overlayColor: 'rgba(0, 0, 0, .55)',        // 背景色
   size: 20,
   color: 'primary',                           // color
   text:'数据加载中',
-  className: '' ,
+  className: 'hiddenloading' ,
   target:document.body
 });
 Vue.use(Button).use(Dialog).use(Snackbar).use(Icon).use(Progress).use(TextField).use(Helpers).use(Message,option);
-
+Vue.filter('fixed', function (value) {
+  if (!value) return ''
+  return (value/1000).toFixed(3)
+})
 Vue.config.productionTip = false
 
 let vm=  new Vue({

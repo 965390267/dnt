@@ -13,7 +13,6 @@ Vue.use(Toast,{
   warningIcon: '',     // 提醒信息图标
   errorIcon: ''              // 错误信息图标
 });
-// Vue.use(Loading);
 // // export const baseurl='http://106.15.52.35:8080/' 
 //   // axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
   axios.defaults.baseURL = env() == 'production'?location.origin+'/':'https://dnt.network';
@@ -23,6 +22,7 @@ function env() {
   if (window.location.href.includes('192.168')) return 'test';        //测试环境，"192.168"根据实际情况而定
   return 'production'                                                 //线上环境
 }
+
 let loading =null;
 // 添加请求拦截器
 axios.interceptors.request.use((config) => {
@@ -32,6 +32,7 @@ axios.interceptors.request.use((config) => {
 }, function (error) {
   // 对请求错误做些什么
   loading&&loading.close();
+  loading =null;
   console.log(error);
   return Promise.reject(error);
 });
@@ -40,6 +41,7 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   loading&&loading.close();
+  loading =null;
   console.log(response);
   const res = response.data
   if (!res.success) {
@@ -50,6 +52,7 @@ axios.interceptors.response.use(function (response) {
   // 对响应错误做点什么
   console.log(error);
   loading&&loading.close();
+  loading =null;
   if (error && error.response) {
 console.log(error.response);
 

@@ -5,31 +5,31 @@
       <div class="card1">
         <div class="tit1">
           <div class="left">DNT Wallet</div>
-          <div class="right">{{totalAssetsDNT}} DNT</div>
+          <div class="right">{{dntBalance|fixed}} DNT</div>
         </div>
         <div class="tit2">
           <div class="left">
             {{hiddenMidAddress}}
             <i></i>
           </div>
-          <div class="right">≈￥{{CNY}} DNT</div>
+          <div class="right">≈￥{{CNY}}</div>
         </div>
         <!-- <div class="dottod"></div> -->
       </div>
       <div class="card2">
         <div class="tit sm">
           <div class="left">DNT总资产</div>
-          <div class="right">{{totalAssetsDNT}} DNT</div>
-          <div class="sm-tit">￥{{CNY}}</div>
+          <div class="right">{{totalAssetsDNT|fixed}} DNT</div>
+          <div class="sm-tit">￥{{totalCNY}}</div>
         </div>
 
         <div class="tit">
           <div class="left">BFB总资产</div>
-          <div class="right">{{totalAssetsBFB}}BFB</div>
+          <div class="right">{{totalAssetsBFB|fixed}}BFB</div>
         </div>
         <div class="tit">
           <div class="left">累计收益</div>
-          <div class="right">{{totalIncome}}BFB</div>
+          <div class="right">{{totalIncome|fixed}}BFB</div>
         </div>
       </div>
     </div>
@@ -62,6 +62,7 @@ export default {
   data() {
     return {
       CNY: "",
+      totalCNY:'',
       nodeaddress: this.imtokenAddress,
       totalAssetsDNT: "",
       totalAssetsBFB: "",
@@ -81,13 +82,16 @@ export default {
   created() {
     //  this.$confirm('Hello world ?', 'Confirm');
     personalAssest(this.imtokenAddress).then(res => {
-      this.totalAssetsDNT = (res.data.totalAssetsDNT / 1000).toFixed(3);
-      this.totalAssetsBFB = (res.data.totalAssetsBFB / 1000).toFixed(3);
-      this.totalIncome = (res.data.totalIncome / 1000).toFixed(3);
-      this.dntBalance = (res.data.dntBalance / 1000).toFixed(3);
+      console.log(res);
+      
+      this.totalAssetsDNT = res.data.totalAssetsDNT ;
+      this.totalAssetsBFB = res.data.totalAssetsBFB;
+      this.totalIncome = res.data.totalIncome ;
+      this.dntBalance = res.data.dntBalance;
       getDNTCNY().then(ret => {
         /* nova转人民币汇率 */
-        this.CNY = ((res.data.totalAssetsDNT / 1000) * ret.data.cny).toFixed(3);
+        this.totalCNY = ((res.data.totalAssetsDNT / 1000) * ret.data.cny).toFixed(3);
+        this.CNY=((res.data.dntBalance / 1000) * ret.data.cny).toFixed(3);
       });
     });
   }

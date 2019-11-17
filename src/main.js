@@ -14,6 +14,7 @@ import Message from 'muse-ui-message';
 import option from './config/messageconf'
 import 'muse-ui-loading/dist/muse-ui-loading.css'; // load css
 import Loading from 'muse-ui-loading';
+import Toast from 'muse-ui-toast';
 Vue.use(Loading,{
   overlayColor: 'rgba(0, 0, 0, .55)',        // 背景色
   size: 20,
@@ -22,7 +23,16 @@ Vue.use(Loading,{
   className: 'hiddenloading' ,
   target:document.body
 });
-Vue.use(Button).use(Dialog).use(Snackbar).use(Icon).use(Progress).use(TextField).use(Helpers).use(Message,option);
+Vue.use(Button).use(Dialog).use(Snackbar).use(Icon).use(Progress).use(TextField).use(Helpers).use(Message,option).use(Toast,{
+  position: 'top',               // 弹出的位置
+  time: 2000,                       // 显示的时长
+  closeIcon: '',               // 关闭的图标
+  close: false,                      // 是否显示关闭按钮
+  successIcon: '',      // 成功信息图标
+  infoIcon: '',                 // 信息信息图标
+  warningIcon: '',     // 提醒信息图标
+  errorIcon: ''              // 错误信息图标
+});
 Vue.filter('fixed', function (value) {
   if (!value) return ''
   return (value/1000).toFixed(3)
@@ -42,6 +52,7 @@ if (!!window.imToken) {/* imtoken环境下 */
       // Request account access if needed
       ethereum.enable().then((accounts) => {
         Vue.prototype.imtokenAddress = window.accounts = accounts[0];
+       // Vue.prototype.imtokenAddress = window.accounts = '0xfe35583b20f5f4a29e10260a03a2d94a2117525a';
         /* eslint-disable no-new */
         vm.$mount('#app')
       }).catch((err) => {
@@ -56,7 +67,8 @@ if (!!window.imToken) {/* imtoken环境下 */
   else if (window.web3) {
     window.web3 = new Web3(web3.currentProvider);
     ethereum.enable().then((accounts) => {
-      Vue.prototype.imtokenAddress = window.accounts = accounts[0];
+     Vue.prototype.imtokenAddress = window.accounts = accounts[0];
+    // Vue.prototype.imtokenAddress = window.accounts = '0xfe35583b20f5f4a29e10260a03a2d94a2117525a';
       /* eslint-disable no-new */
       vm.$mount('#app')
     }).catch((err) => {
@@ -72,9 +84,9 @@ if (!!window.imToken) {/* imtoken环境下 */
 else {/* 浏览器环境下 */
 
   if (env() != 'production') {
-    Vue.prototype.imtokenAddress = '0xfe35583b20f5f4a29e10260a03a2d94a2117525a'
-  }else{
     Vue.prototype.imtokenAddress = '0x9861C181Be9413bF8f445d4AeEbc9DcF71D8eA03'
+  }else{
+    Vue.prototype.imtokenAddress = ''
   }
   function env() {
     if (process.env.NODE_ENV === "development") return "development";   //开发环境

@@ -6,7 +6,7 @@
              <mu-ripple>
           <div class="top">
             <div class="tit1">
-              <div class="left">{{pledgeAmout}}DNT</div>
+              <div class="left">{{totalPledgeAmout}}DNT</div>
               <div class="right">100DNT:3BFB</div>
             </div>
             <div class="tit2">
@@ -20,7 +20,7 @@
           <div class="bottom">
             <div class="left">
               <div class="tit4">我的投入</div>
-              <div class="tit5">{{totalPledgeAmout}} DNT</div>
+              <div class="tit5">{{pledgeAmout}} DNT</div>
             </div>
             <div class="mid">
               <div class="tit4">昨日收益</div>
@@ -28,7 +28,7 @@
             </div>
             <div class="right">
               <div class="tit4">预计收益(天)</div>
-              <div class="tit5">3.225 BFB</div>
+              <div class="tit5">{{todayIncome}} BFB</div>
             </div>
           </div>
            </mu-ripple>

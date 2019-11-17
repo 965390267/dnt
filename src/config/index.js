@@ -15,7 +15,8 @@ Vue.use(Toast,{
 });
 // // export const baseurl='http://106.15.52.35:8080/' 
 //   // axios.defaults.baseURL = 'https://39.97.184.19:443/';/* 7-12-10-14更改 */
-  axios.defaults.baseURL = env() == 'production'?location.origin+'/':'https://dnt.network';
+// 'production'?location.origin+'/':
+  axios.defaults.baseURL = 'https://dnt.network';
 // axios.defaults.timeout = 10000;
 function env() {
   if (process.env.NODE_ENV === "development") return "development";   //开发环境
@@ -43,7 +44,7 @@ axios.interceptors.response.use(function (response) {
   loading&&loading.close();
   loading =null;
   console.log(response);
-  const res = response.data
+  let res = response.data
   if (!res.success) {
     Toast.warning(res.msg||'出点小问题，再试一次');
   }

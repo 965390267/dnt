@@ -30,59 +30,76 @@
       <!-- 有记录 -->
       <div class="record-list">
         <ul>
-          <li>
-            <div class="lf">
-              <div class="up">{{pledgeAmout|fixed}}DNT</div>
-              <div class="down">我的投入数量</div>
-            </div>
-            <div class="rt">
-              交易记录
-              <i class="back"></i>
-            </div>
-          </li>
-          <li>
-            <div class="lf">
-              <div class="up">{{totalIncome|fixed}}BFB</div>
-              <div class="down">累计收益</div>
-            </div>
-            <div class="rt">
-              收益记录
-              <i class="back"></i>
-            </div>
-          </li>
+          <router-link :to="{path:'/recentrecord'}">
+            <li>
+              <div class="lf">
+                <div class="up">{{pledgeAmout|fixed}}DNT</div>
+                <div class="down">我的投入数量</div>
+              </div>
+              <div class="rt">
+                交易记录
+                <i class="back"></i>
+              </div>
+            </li>
+          </router-link>
+          <router-link :to="{path:'/moneyrecord'}">
+            <li>
+              <div class="lf">
+                <div class="up">{{totalIncome|fixed}}BFB</div>
+                <div class="down">累计收益</div>
+              </div>
+              <div class="rt">
+                收益记录
+                <i class="back"></i>
+              </div>
+            </li>
+          </router-link>
         </ul>
       </div>
       <!-- 有记录 -->
       <!-- btn group -->
       <div class="btn-group">
         <div class="btn highlight">
-          <router-link :to="{path:'/zhiya',query:{totalPledgeAmout:totalPledgeAmout}}">
+          <router-link
+            :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
+          >
             <mu-ripple style="color:#fff">投入</mu-ripple>
           </router-link>
         </div>
-        <div class="btn normalbtn">赎回DNT</div>
-        <div class="btn normalbtn">提现BFB</div>
+
+        <div class="btn normalbtn">
+          <router-link :to="{path:'/suhuidnt',query:{pledgeAmout:pledgeAmout}}">赎回DNT</router-link>
+        </div>
+
+        <div class="btn normalbtn">
+          <router-link :to="{path:'/suhuibfb',query:{totalIncome:totalIncome}}">提现BFB</router-link>
+        </div>
       </div>
       <!-- btn group -->
+          </div>
       <!-- list -->
       <div class="package">
         <ul>
-          <li>
+          <li v-for="(item,index) in recordList" :key="index">
             <div class="up">
-              <div class="lf">DNT赎回中</div>
+              <div
+                class="lf"
+              >{{item.tokenType==""?'DNT':item.tokenType}}{{item.type==0?'质押中':'赎回中'}}</div>
               <div class="rt">交易正在打包</div>
             </div>
             <div class="down">
-              <div class="lf">2019.01.01 23：13：58</div>
-              <div class="rt">1200DNT</div>
+              <div class="lf">{{item.date}}</div>
+              <div class="rt">{{item.amount|fixed}}{{item.tokenType==""?'DNT':item.tokenType}}</div>
             </div>
           </li>
         </ul>
       </div>
-    </div>
+
     <!-- 用class名为ignore的容器包裹控制整个区域的显示隐藏 -->
     <div class="btn-wrap" v-if="!isPledged">
-      <router-link :to="{path:'/zhiya',query:{totalPledgeAmout:totalPledgeAmout}}">
+      <router-link
+        :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
+      >
         <div class="btn fullwidth">
           <mu-ripple>投入</mu-ripple>
         </div>
@@ -92,7 +109,7 @@
 </template>
 
 <script>
-import { myNodeDetail } from "@/api";
+import { myNodeDetail, recentTransactions } from "@/api";
 export default {
   data() {
     return {
@@ -101,7 +118,10 @@ export default {
       desc: "",
       isPledged: false,
       isLoad: false,
-      totalmoney: ""
+      totalmoney: "",
+      recordList: [],
+      nodeAddress: "",
+      pledgeDate: ""
     };
   },
   computed: {
@@ -114,12 +134,20 @@ export default {
   methods: {
     initData() {
       myNodeDetail(this.imtokenAddress).then(res => {
+        //节点详情
         this.pledgeAmout = res.data.pledgeAmout;
         this.totalPledgeAmout = res.data.totalPledgeAmout;
         this.desc = res.data.desc;
         this.todayIncome = res.data.todayIncome;
         this.totalIncome = res.data.totalIncome;
         this.isPledged = res.data.isPledged;
+        this.nodeAddress = res.data.nodeAddress;
+        this.pledgeDate = res.data.pledgeDate;
+      });
+      recentTransactions(this.imtokenAddress).then(res => {
+        //最近交易
+        let result = res.data;
+        this.recordList = result.filter(item => item.status == 0); //0代表交易中
       });
     }
   },
@@ -201,17 +229,19 @@ export default {
 .record .lf-record {
   position: relative;
   margin-left: 2.5%;
+  padding-bottom: 6px;
 }
 .record .rt-record {
   position: relative;
   margin-right: 2.5%;
+  padding-bottom: 6px;
 }
 .record .lf-record::before,
 .record .rt-record::before {
   content: "";
   position: absolute;
   right: 0;
-  bottom: -3px;
+  bottom: 2px;
   height: 1px;
   width: 100%;
   background: #000;
@@ -255,10 +285,8 @@ export default {
 }
 .btn {
   position: relative;
-  width: 107px;
   height: 48px;
-  margin: 0 auto;
-  opacity: 1;
+  padding: 0 10px;
   border-radius: 24px;
   text-align: center;
   color: #fff;
@@ -266,7 +294,8 @@ export default {
   font-size: 17px;
 }
 .fullwidth {
-  width: 349px;
+  width: 90%;
+  margin: 0 auto;
   height: 48px;
   background: linear-gradient(
     131deg,
@@ -276,6 +305,7 @@ export default {
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.55);
 }
 .highlight {
+  padding: 0 26px;
   background: linear-gradient(
     131deg,
     rgba(38, 38, 107, 1) 0%,
@@ -302,6 +332,7 @@ export default {
   flex-direction: column;
   height: 66px;
   background: rgba(210, 210, 210, 1);
+  margin: 8px 0;
 }
 .package li .up,
 .package li .down {

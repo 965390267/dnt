@@ -24,9 +24,17 @@ Vue.use(Router)
     }
     ,
     {
-      path: '/suhui',
-      name: 'suhui',
-      component:()=>import('@/view/suhui'),
+      path: '/suhuidnt',
+      name: 'suhuidnt',
+      component:()=>import('@/view/suhuidnt'),
+      meta:{
+        title:'DNT双轨经济生态'
+      }
+    },
+    {
+      path: '/suhuibfb',
+      name: 'suhuibfb',
+      component:()=>import('@/view/suhuibfb'),
       meta:{
         title:'DNT双轨经济生态'
       }

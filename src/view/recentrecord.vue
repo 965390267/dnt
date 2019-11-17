@@ -6,15 +6,17 @@
       <ul>
         <li v-for="(item,index) in recordList" :key="index">
           <div class="top">
-            <div class="lf">质押DNT</div>
+            <div class="lf">{{item.tokenType==""?'质押DNT':'赎回'+item.tokenType}}</div>
             <div class="rt">
-              质押成功
-              <i class="icon"></i>
+              {{item.status==1?item.tokenType==""?'质押成功':'赎回成功':item.tokenType==""?'质押失败':'赎回失败'}}
+              
+              <i class="icon " v-if='item.status==1'></i>
+               <i class="icon active" v-else></i>
             </div>
           </div>
           <div class="down">
             <div class="lf">{{item.date|formatDateToYear}}</div>
-            <div class="rt">1200.368DNT</div>
+            <div class="rt">{{item.amount|fixed}}DNT</div>
           </div>
         </li>
         <!-- <li>

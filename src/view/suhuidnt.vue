@@ -4,12 +4,12 @@
       <lo-go txt="DNT" :url="require('../assets/img/dntlogo@2x.png')"></lo-go>
     </div>
     <div class="tips">
-      <div class="lt">DNT 投入数量</div>
-      <div class="rf">20000</div>
+      <div class="lt">DNT 已投入数量</div>
+      <div class="rf">{{total}}</div>
     </div>
     <div class="input-wrap">
-      <input type="text" placeholder="输入数量" />
-      <div class="total">DNT | 全部</div>
+      <input type="number" placeholder="输入数量" v-model="amount"/>
+      <div class="total" @click="setAll()">DNT | 全部</div>
     </div>
     <div class="pricegas">手续费：50 DNT</div>
     <div class="pladge-rule">
@@ -18,12 +18,12 @@
       <p>DNT投入满15天后，赎回时扣除手续费50DNT。</p>
     </div>
     <div class="btn-wrap">
-      <div class="btn">确定</div>
+      <div class="btn"  @click=" get()">确定</div>
     </div>
   </div>
 </template>
 <script>
-// import { getNodeRedeem, personalAssest } from "@/api";
+ import { getNodeRedeem } from "@/api";
 
 import LoGo from "@/components/logo.vue";
 export default {
@@ -32,57 +32,64 @@ export default {
   },
   data() {
     return {
+      total:'',
       amount: "",
-      src: require("../assets/img/dntlogo@2x.png")
+      src: require("../assets/img/dntlogo@2x.png"),
+      pledgeDate:''
     };
   },
   watch: {
     amount(val) {
-      if (val > this.$route.query.pledgeAmount / 1000) {
+
+      if (val > this.$route.query.pledgeAmout / 1000) {
         this.amount = Number(
           val.toString().substring(0, val.toString().length - 1)
         );
-        return imToken.callAPI(
-          "native.toastInfo",
-          this.$t("shuhui.amountLimit")
-        );
+        return this.$alert('已超过您所拥有的的最大量');
       }
+
     }
   },
   methods: {
-    submit() {},
+    diffDay(date){
+    let diff=  (new Date().getTime()-new Date(date).getTime())/1000/60/60/24
+    return diff>15?true:false;
+    },
     get() {
-      if (this.amount == 0) return alert(this.$t("shuhui.numbernotzero"));
+      if (this.amount == 0) return this.$alert('数量不能为0');
+      if(this.amount<50&&this.diffDay(this.pledgeDate)){
+          return this.$alert('DNT投入已满15天，赎回时手续费为50DNT，您账户中DNT数量不足，暂时不可提现。');
+      }
+
       this.amount = Number(this.amount);
-      if (!this.$route.query.nodeId) {
-        alert(this.$t("shuhui.nogetaddress"));
-        return this.$router.back(-1);
-      }
+
       if (!this.imtokenAddress) {
-        alert(this.$t("shuhui.noauthtoken"));
+        this.$alert('未授权钱包地址，请授权后重试');
         return this.$router.back(-1);
       }
-      var obj = {
-        nodeId: this.$route.query.nodeId, //服务器地址
+      this.$confirm(this.diffDay(this.pledgeDate)?`赎回数量：${this.amount}DNT 实际到账：${this.amount-50}DNT 手续费为50DNT，您确定赎回吗？`:`赎回数量：${this.amount}DNT，实际到账:${this.amount-(this.amount*0.1123)}DNT,投入满15天，手续费为50DNT建议投入15天后赎回`)
+      .then(({ result }) => {
+        if (result) {
+           var obj = {
+        tokenType: 'DNT' , //服务器地址
         toAddress: this.imtokenAddress, //钱包地址
         amount: this.amount * 1000
       };
-      getNodeRedeem(obj).then(res => {
+      getNodeRedeem(obj).then(res => {//赎回接口
         this.$router.back(-1);
       });
+
+        } 
+      });
+    
     },
     setAll() {
-      // personalAssest(this.imtokenAddress).then(res => {
-      //   var res = res.data;
-      //   if (res.success) {
-      //this.balance = this.$route.query.nodeMessage.pledgeAmount
-      this.amount = this.$route.query.pledgeAmount / 1000;
-      //   }
-      // });
+      this.amount= this.total ;
     }
   },
   mounted() {
-    //this.initData(); /* 数据初始化 */
+   this.total = this.$route.query.pledgeAmout / 1000;
+    this.pledgeDate=this.$route.query.pledgeDate
   }
 };
 </script>
@@ -136,13 +143,13 @@ export default {
 .pladge-rule {
   width: 95%;
   margin: 0 auto;
-  margin-top: 70px;
+ margin-top: 30px;
 }
 .pladge-rule p {
   font-size: 12px;
   color: #707070;
   padding: 3px 2px;
-  line-height: 18px;
+  line-height: 22px;
 }
 .pladge-rule .p1 {
   color: #000;
@@ -157,7 +164,7 @@ export default {
   width: 100%;
 }
 .btn {
-  width: 349px;
+  width: 90%;
   height: 48px;
   margin: 0 auto;
   background: linear-gradient(

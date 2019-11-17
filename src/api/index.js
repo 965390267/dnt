@@ -1,10 +1,9 @@
 import axios from '@/config'
 /** 
  * @request {POST}
- * @param {nodeId}
  * @param {toAddress}
  *  @param {amount}
- *  @param {type}
+ *  @param {tokenType} DNT BFB
  *  @return {
 "success": false,
 "code": "1",

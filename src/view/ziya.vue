@@ -4,14 +4,14 @@
       <lo-go txt="DNT" :url="require('../assets/img/dntlogo@2x.png')"></lo-go>
     </div>
     <div class="tips">
-      <div class="lt">DNT 投入数量</div>
+      <div class="lt">DNT 可用余额</div>
       <div class="rf">{{userTotalAmount|fixed}}</div>
     </div>
     <div class="input-wrap">
       <input type="number" placeholder="输入数量" v-model="amount" />
       <div class="total" @click="setAll()">DNT | 全部</div>
     </div>
-    <div class="pricegas">手续费：50 DNT</div>
+    <div class="pricegas">矿工费≈{{gas}}ETH</div>
     <div class="pladge-rule">
       <p class="p1">质押规则：</p>
       <p>当日投入DNT后将于次日产生BFB收益，并将于每日24:00结算当日收益。</p>
@@ -20,7 +20,6 @@
       <p>投入10000DNT，一年将产出300BFB。</p>
       <p>DNT现价：0.025USDT</p>
       <p>BFB现价：0.14USDT</p>
-      <p>当前年化16.8%</p>
     </div>
     <div class="btn-wrap">
       <div
@@ -38,8 +37,8 @@
 <script>
 import LoGo from "@/components/logo";
 import imtokenPay from "@/assets/js/pay.js";
-import { dntABI, dntAddress, bfbABI, bfbAddress } from "@/assets/js/abi.js";
-// import { getNodePledge, personalAssest, getGas } from "@/api";
+import { dntABI, dntAddress } from "@/assets/js/abi.js";
+import { getNodePledge,personalAssest,getGas } from "@/api";
 export default {
   components: { LoGo },
   data() {
@@ -47,7 +46,8 @@ export default {
       amount: "" /* 用户输入的Nova数量，提交需要*1000 */,
       btnloading: false,
       isgrey: true,
-      userTotalAmount: ""
+      userTotalAmount: "",
+      gas:''
     };
   },
   watch: {
@@ -65,10 +65,6 @@ export default {
       if (this.isgrey) return;
       this.btnloading = true;
       this.amount = Number(this.amount);
-      if (this.amount <= 0)
-        return this.$alert("数量必须大于0", "提示", {
-          okLabel: "确定"
-        });
       if (!this.imtokenAddress) {
         this.$alert("未成功授权，请退出重试", "提示", {
           okLabel: "确定"
@@ -76,12 +72,15 @@ export default {
         return this.$router.back(-1);
       }
       let payAmount = this.amount * 1000;
-      imtokenPay(dntABI, this.imtokenAddress, dntAddress, payAmount)
+      imtokenPay(dntABI,this.$route.query.nodeAddress, dntAddress, payAmount)
         .then(hash => {
+    
           //调用封装钱包支付的方法
           this.pay(hash);
         })
-        .catch(err => {});
+        .catch(err => {
+           this.btnloading=false
+        });
     },
     pay(hash) {
       //走自己的后台记录
@@ -91,7 +90,11 @@ export default {
         txnHash: hash
       };
       getNodePledge(obj).then(res => {
+          this.btnloading=false
+        if(res.success){         
         this.$router.back(-1); //成功后返回上一页
+        }
+
       });
     },
     setAll() {
@@ -100,7 +103,13 @@ export default {
     }
   },
   mounted() {
-    this.userTotalAmount = this.$route.query.totalPledgeAmout;
+    personalAssest(this.imtokenAddress).then(res=>{
+    this.userTotalAmount =res.data.dntBalance;
+    })
+
+    getGas().then(res=>{
+      this.gas=res.data.gas/1000000000000000000;
+    })
   }
 };
 </script>
@@ -154,7 +163,7 @@ export default {
 .pladge-rule {
   width: 95%;
   margin: 0 auto;
-  margin-top: 70px;
+  margin-top: 30px;
 }
 .pladge-rule p {
   font-size: 12px;
@@ -177,7 +186,7 @@ export default {
 
 .btn {
   position: relative;
-  width: 349px;
+  width: 90%;
   height: 48px;
   margin: 0 auto;
   background: linear-gradient(

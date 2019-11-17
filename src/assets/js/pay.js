@@ -53,27 +53,8 @@
     });
   }
 
-  function approveNova(provider, novaAbi, novaAddress, callBackBalance) {
-    var eth = new Eth(provider);
-    eth.accounts().then(accounts => {
-      const Nova = eth.contract(novaAbi, {
-        from: accounts[0]
-      });
-      var nova = Nova.at(novaAddress);
-      nova
-        .approve(novaAddress, 10000000000000, {
-          from: web3.eth.accounts[0]
-        })
-        .then(function(info) {
-          alert(info);
-        })
-        .catch(function(info) {
-          alert(info);
-        });
-    });
-  }
       /* 
-       *@ useraddress{用户imtoken授权地址}
+       *@ useraddress{节点地址}
         @ contractAddress{签署合约地址}
         @ pledgeAmount{质押进钱包的数量}
       */

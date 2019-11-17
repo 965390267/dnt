@@ -6,7 +6,7 @@
           <div class="lf-icon"></div>
           <div class="txt">BFB</div>
         </div>
-        <div class="profit">累计收益：{{totalIncome}}</div>
+        <div class="profit">累计收益：{{totalIncome|fixed}}</div>
       </div>
     </div>
 
@@ -15,13 +15,11 @@
         <li v-for="(item,index) in recordList" :key="index">
           <div class="top">
             <div class="lf">收益</div>
-            <div
-              class="rt"
-            >{{item.incomeAmount/1000>0?'+'+item.incomeAmount/1000:'-'+item.incomeAmount/1000}}</div>
+            <div class="rt">{{item.incomeAmount/1000>0?'+'+item.incomeAmount/1000:'-'+item.incomeAmount/1000}}</div>
           </div>
           <div class="down">
             <div class="lf">{{item.createDate|formatDateToYear}}</div>
-            <div class="rt">{{item.pledgeAmount/1000}}FB</div>
+            <div class="rt">{{item.dateIncomeAmount|fixed}}DFB</div>
           </div>
         </li>
       </ul>

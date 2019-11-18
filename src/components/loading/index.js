@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import LoadIng from './loading'
+import LoadIng from '.'
 //创建构造器
 const SelfLoading = Vue.extend(LoadIng)
 

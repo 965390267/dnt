@@ -88,8 +88,8 @@ export default {
      this.pledgeDate=this.$route.query.pledgeDate
   },
    destroyed(){
-       this.$alert=null;
-       this.$toast=null;
+         document.body.removeChild(document.querySelector('.mu-dialog-wrapper'))//一个不优雅的方式解决muse ui弹窗通过返回键返回不会关闭的问题，回到改页面移除弹窗DOM元素
+          document.body.removeChild(document.querySelector('.mu-overlay'))
    }
 };
 </script>

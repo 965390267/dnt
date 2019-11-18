@@ -34,7 +34,7 @@ Vue.use(Button).use(Dialog).use(Snackbar).use(Icon).use(Progress).use(TextField)
   errorIcon: ''              // 错误信息图标
 });
 Vue.filter('fixed', function (value) {
-  if (!value) return ''
+  if (!value) return 0
   return (value/1000).toFixed(3)
 })
 Vue.config.productionTip = false

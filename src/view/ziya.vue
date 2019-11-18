@@ -5,7 +5,7 @@
     </div>
     <div class="tips">
       <div class="lt">DNT 可用余额</div>
-      <div class="rf">{{userTotalAmount|fixed}}</div>
+      <div class="rf">{{userTotalAmount|fixed}} DNT</div>
     </div>
     <div class="input-wrap">
       <input type="number" placeholder="输入数量" v-model="amount" />
@@ -46,17 +46,19 @@ export default {
       amount: "" /* 用户输入的Nova数量，提交需要*1000 */,
       btnloading: false,
       isgrey: true,
-      userTotalAmount: "",
+      userTotalAmount: 0,
       gas:''
     };
   },
   watch: {
     amount(val) {
       if (val > 0) this.isgrey = false;
+       if (val == 0) return this.$alert('余额不足，不可投入');
       if (val > this.userTotalAmount / 1000) {
         this.amount = Number(
           val.toString().substring(0, val.toString().length - 1)
         );
+        return this.$alert('已超过您所拥有的的最大量');
       }
     }
   },
@@ -65,6 +67,7 @@ export default {
       if (this.isgrey) return;
       this.btnloading = true;
       this.amount = Number(this.amount);
+        if (this.amount == 0) return this.$alert('余额不足，不可投入');
       if (!this.imtokenAddress) {
         this.$alert("未成功授权，请退出重试", "提示", {
           okLabel: "确定"
@@ -104,13 +107,17 @@ export default {
   },
   mounted() {
     personalAssest(this.imtokenAddress).then(res=>{
-    this.userTotalAmount =res.data.dntBalance;
+    this.userTotalAmount =res.data.dntBalance||0;
     })
 
     getGas().then(res=>{
       this.gas=res.data.gas/1000000000000000000;
     })
-  }
+  } ,
+  destroyed(){
+         document.body.removeChild(document.querySelector('.mu-dialog-wrapper'))//一个不优雅的方式解决muse ui弹窗通过返回键返回不会关闭的问题，回到改页面移除弹窗DOM元素
+          document.body.removeChild(document.querySelector('.mu-overlay'))
+   }
 };
 </script>
 

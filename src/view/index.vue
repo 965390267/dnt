@@ -61,13 +61,13 @@ export default {
   name: "index",
   data() {
     return {
-      CNY: "",
+      CNY: '',
       totalCNY:'',
       nodeaddress: this.imtokenAddress,
-      totalAssetsDNT: "",
-      totalAssetsBFB: "",
-      totalIncome: "",
-      dntBalance: ""
+      totalAssetsDNT: '',
+      totalAssetsBFB: '',
+      totalIncome: '',
+      dntBalance: ''
     };
   },
   computed: {
@@ -82,16 +82,14 @@ export default {
   created() {
     //  this.$confirm('Hello world ?', 'Confirm');
     personalAssest(this.imtokenAddress).then(res => {
-      console.log(res);
-      
-      this.totalAssetsDNT = res.data.totalAssetsDNT ;
-      this.totalAssetsBFB = res.data.totalAssetsBFB;
-      this.totalIncome = res.data.totalIncome ;
-      this.dntBalance = res.data.dntBalance;
+      this.totalAssetsDNT = res.data.totalAssetsDNT?res.data.totalAssetsDNT:0 ;
+      this.totalAssetsBFB = res.data.totalAssetsBFB?res.data.totalAssetsBFB:0;
+      this.totalIncome = res.data.totalIncome?res.data.totalIncome:0 ;
+      this.dntBalance = res.data.dntBalance?res.data.dntBalance:0;
       getDNTCNY().then(ret => {
         /* nova转人民币汇率 */
-        this.totalCNY = ((res.data.totalAssetsDNT / 1000) * ret.data.cny).toFixed(3);
-        this.CNY=((res.data.dntBalance / 1000) * ret.data.cny).toFixed(3);
+        this.totalCNY = (( this.totalAssetsDNT / 1000) * ret.data.cny).toFixed(3);
+        this.CNY=(( this.dntBalance / 1000) * ret.data.cny).toFixed(3);
       });
     });
   }

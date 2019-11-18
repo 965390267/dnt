@@ -35,7 +35,8 @@ export default {
       total:'',
       amount: "",
       src: require("../assets/img/dntlogo@2x.png"),
-      pledgeDate:''
+      pledgeDate:'',
+      isPassDate:false
     };
   },
   watch: {
@@ -51,23 +52,22 @@ export default {
     }
   },
   methods: {
-    diffDay(date){
-    let diff=  (new Date().getTime()-new Date(date).getTime())/1000/60/60/24
-    return diff>15?true:false;
-    },
+    // diffDay(date){
+    // let diff=  (new Date().getTime()-new Date(date).getTime())/1000/60/60/24
+    // return diff>15?true:false;
+    // },
     get() {
+            this.amount = Number(this.amount);
       if (this.amount == 0) return this.$alert('数量不能为0');
-      if(this.amount<50&&this.diffDay(this.pledgeDate)){
+      if(this.amount<50&&this.isPassDate){
           return this.$alert('DNT投入已满15天，赎回时手续费为50DNT，您账户中DNT数量不足，暂时不可提现。');
       }
-
-      this.amount = Number(this.amount);
 
       if (!this.imtokenAddress) {
         this.$alert('未授权钱包地址，请授权后重试');
         return this.$router.back(-1);
       }
-      this.$confirm(this.diffDay(this.pledgeDate)?`赎回数量：${this.amount}DNT 实际到账：${this.amount-50}DNT 手续费为50DNT，您确定赎回吗？`:`赎回数量：${this.amount}DNT，实际到账:${this.amount-(this.amount*0.1123)}DNT,投入满15天，手续费为50DNT建议投入15天后赎回`)
+      this.$confirm(this.isPassDate?`赎回数量：${this.amount}DNT 实际到账：${this.amount-50}DNT 手续费为50DNT，您确定赎回吗？`:`赎回数量：${this.amount}DNT，实际到账:${this.amount-(this.amount*0.1123)}DNT,投入满15天，手续费为50DNT建议投入15天后赎回`)
       .then(({ result }) => {
         if (result) {
            var obj = {
@@ -90,7 +90,12 @@ export default {
   mounted() {
    this.total = this.$route.query.pledgeAmout / 1000;
     this.pledgeDate=this.$route.query.pledgeDate
-  }
+    this.isPassDate=this.$route.query.isPassDate;//是否满15天，true是超过15天的
+  }  ,
+  destroyed(){
+         document.body.removeChild(document.querySelector('.mu-dialog-wrapper'))//一个不优雅的方式解决muse ui弹窗通过返回键返回不会关闭的问题，回到改页面移除弹窗DOM元素
+          document.body.removeChild(document.querySelector('.mu-overlay'))
+   }
 };
 </script>
 

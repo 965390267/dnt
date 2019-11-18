@@ -61,7 +61,7 @@
       <div class="btn-group">
         <div class="btn highlight">
           <router-link
-            :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
+            :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate,isPassDate:isPassDate}}"
           >
             <mu-ripple style="color:#fff">投入</mu-ripple>
           </router-link>
@@ -98,7 +98,7 @@
     <!-- 用class名为ignore的容器包裹控制整个区域的显示隐藏 -->
     <div class="btn-wrap" v-if="!isPledged">
       <router-link
-        :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
+        :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate,isPassDate:isPassDate}}"
       >
         <div class="btn fullwidth">
           <mu-ripple>投入</mu-ripple>
@@ -121,7 +121,8 @@ export default {
       totalmoney: "",
       recordList: [],
       nodeAddress: "",
-      pledgeDate: ""
+      pledgeDate: "",
+      isPassDate:''
     };
   },
   computed: {
@@ -143,6 +144,7 @@ export default {
         this.isPledged = res.data.isPledged;
         this.nodeAddress = res.data.nodeAddress;
         this.pledgeDate = res.data.pledgeDate;
+        this.isPassDate=res.data.isPassDate;
       });
       recentTransactions(this.imtokenAddress).then(res => {
         //最近交易
@@ -150,6 +152,9 @@ export default {
         this.recordList = result.filter(item => item.status == 0); //0代表交易中
       });
     }
+  },
+  mounted(){
+  
   },
   created() {
     this.initData();

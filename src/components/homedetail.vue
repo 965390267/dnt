@@ -6,7 +6,7 @@
              <mu-ripple>
           <div class="top">
             <div class="tit1">
-              <div class="left">{{totalPledgeAmout}}DNT</div>
+              <div class="left">{{totalPledgeAmout|fixed}}DNT</div>
               <div class="right">100DNT:3BFB</div>
             </div>
             <div class="tit2">
@@ -20,15 +20,15 @@
           <div class="bottom">
             <div class="left">
               <div class="tit4">我的投入</div>
-              <div class="tit5">{{pledgeAmout}} DNT</div>
+              <div class="tit5">{{pledgeAmout|fixed}} DNT</div>
             </div>
             <div class="mid">
               <div class="tit4">昨日收益</div>
-              <div class="tit5">{{yesterdayIncome}} BFB</div>
+              <div class="tit5">{{yesterdayIncome|fixed}} BFB</div>
             </div>
             <div class="right">
               <div class="tit4">预计收益(天)</div>
-              <div class="tit5">{{todayIncome}} BFB</div>
+              <div class="tit5">{{todayIncome|fixed}} BFB</div>
             </div>
           </div>
            </mu-ripple>
@@ -43,21 +43,17 @@ export default {
     data(){
         return{
            pledgeAmout: '',
-           returnRate: '',
            todayIncome: '',
-           totalIncome: '',
            totalPledgeAmout: '',
            yesterdayIncome: '',
         }
     },
     created(){
            myNodeDetail(this.imtokenAddress).then(res=>{
-              this.pledgeAmout=(res.data.pledgeAmout/1000).toFixed(3)
-              this.returnRate=(res.data.returnRate/1000).toFixed(3)
-              this.todayIncome=(res.data.todayIncome/1000).toFixed(3)
-              this.totalIncome=(res.data.totalIncome/1000).toFixed(3)
-              this.totalPledgeAmout=(res.data.totalPledgeAmout/1000).toFixed(3)
-              this.yesterdayIncome=(res.data.yesterdayIncome/1000).toFixed(3)
+              this.pledgeAmout=res.data.pledgeAmout?res.data.pledgeAmout:0
+              this.todayIncome=res.data.todayIncome?res.data.todayIncome:0
+              this.totalPledgeAmout=res.data.totalPledgeAmout?res.data.totalPledgeAmout:0
+              this.yesterdayIncome=res.data.yesterdayIncome?res.data.yesterdayIncome:0
    })
     }
 }

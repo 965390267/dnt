@@ -18,8 +18,8 @@
       <p>BFB的产出速度与根据投入DNT的时间和数量呈正比。</p>
       <p>即DNT投入数量越多，BFB产出越快；DNT投入时间越久，BFB产出越多。</p>
       <p>投入10000DNT，一年将产出300BFB。</p>
-      <p>DNT现价：0.025USDT</p>
-      <p>BFB现价：0.14USDT</p>
+      <p>DNT现价：{{dntToUsdt.toFixed(6)}}USDT</p>
+      <p>BFB现价：{{bfbToUsdt.toFixed(6)}}USDT</p>
     </div>
     <div class="btn-wrap">
       <div
@@ -38,7 +38,7 @@
 import LoGo from "@/components/logo";
 import imtokenPay from "@/assets/js/pay.js";
 import { dntABI, dntAddress } from "@/assets/js/abi.js";
-import { getNodePledge,personalAssest,getGas } from "@/api";
+import { getNodePledge,personalAssest,getGas,getDNTCNY } from "@/api";
 export default {
   components: { LoGo },
   data() {
@@ -47,7 +47,9 @@ export default {
       btnloading: false,
       isgrey: true,
       userTotalAmount: 0,
-      gas:''
+      gas:'',
+      bfbToUsdt:'',
+      dntToUsdt:''
     };
   },
   watch: {
@@ -114,7 +116,11 @@ export default {
     getGas().then(res=>{
       this.gas=res.data.gas/1000000000000000000;
     })
-
+      getDNTCNY().then(res=>{
+      this.bfbToUsdt=res.data.bfbToUsdt;
+      this.dntToUsdt=res.data.dntToUsdt;
+    
+    })
   } ,
   destroyed(){
          document.body.removeChild(document.querySelector('.mu-dialog-wrapper'))//一个不优雅的方式解决muse ui弹窗通过返回键返回不会关闭的问题，回到改页面移除弹窗DOM元素

@@ -48,6 +48,11 @@
     </div>
     <!-- middle logo end -->
     <NodeDetail></NodeDetail>
+    <div class="guide">
+      <router-link :to="{path:'/guide'}">
+     <div class="guide-txt"> 有何问题?</div>
+     </router-link>
+     </div>
   </div>
 </template>
 
@@ -218,5 +223,25 @@ export default {
 .logo-wrap .right .icon {
   background: url("../assets/img/bfblogo@2x.png") no-repeat;
   background-size: 100% 100%;
+}
+.guide{
+ position: relative;
+  text-align: right;
+  padding-right: 2.5%;
+  font-size: 15px;
+  height: 22px;
+}
+.guide .guide-txt{
+  position: absolute;
+  right: 2.5%;
+}
+.guide-txt::before{
+  content: '';
+  position: absolute;
+  left: 0px;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: #000;
 }
 </style>

@@ -64,6 +64,14 @@ Vue.use(Router)
         title:'最近交易'
       }
     },
+    {
+      path: '/guide',
+      name: 'guide',
+      component:()=>import('@/view/guide'),
+      meta:{
+        title:'问题查看'
+      }
+    },
 
   ]
 })

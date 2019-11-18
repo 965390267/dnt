@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="dot-line"></div>
-      <p class="gg">{{desc}}</p>
+      <p class="gg">投入DNT，每日坐享BFB收益。</p>
       <p class="gg">DNT交易所网址：www.bbkx.com</p>
     </div>
     <!-- 没有记录时候 -->
@@ -61,14 +61,14 @@
       <div class="btn-group">
         <div class="btn highlight">
           <router-link
-            :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate,isPassDate:isPassDate}}"
+            :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
           >
             <mu-ripple style="color:#fff">投入</mu-ripple>
           </router-link>
         </div>
 
         <div class="btn normalbtn">
-          <router-link :to="{path:'/suhuidnt',query:{pledgeAmout:pledgeAmout}}">赎回DNT</router-link>
+          <router-link :to="{path:'/suhuidnt',query:{pledgeAmout:pledgeAmout,isPassDate:isPassDate}}">赎回DNT</router-link>
         </div>
 
         <div class="btn normalbtn">
@@ -98,7 +98,7 @@
     <!-- 用class名为ignore的容器包裹控制整个区域的显示隐藏 -->
     <div class="btn-wrap" v-if="!isPledged">
       <router-link
-        :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate,isPassDate:isPassDate}}"
+        :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
       >
         <div class="btn fullwidth">
           <mu-ripple>投入</mu-ripple>
@@ -206,9 +206,11 @@ export default {
 }
 .tit2 .down .lf {
   padding-left: 15px;
+      color: #ccc;
 }
 .tit2 .down .rt {
   padding-right: 15px;
+    color: #ccc;
 }
 .dot-line {
   width: 92%;
@@ -222,6 +224,7 @@ export default {
   padding-left: 15px;
   color: #fff;
   font-size: 13px;
+  text-transform: none;
 }
 .record {
   display: flex;
@@ -291,7 +294,7 @@ export default {
 .btn {
   position: relative;
   height: 48px;
-  padding: 0 10px;
+    width: 88px;
   border-radius: 24px;
   text-align: center;
   color: #fff;
@@ -310,7 +313,7 @@ export default {
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.55);
 }
 .highlight {
-  padding: 0 26px;
+
   background: linear-gradient(
     131deg,
     rgba(38, 38, 107, 1) 0%,

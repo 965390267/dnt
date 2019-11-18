@@ -1,6 +1,6 @@
 <template>
   <div class="recorddetail">
-    <div class="tit">最近交易</div>
+    <!-- <div class="tit">最近交易</div> -->
 
     <div class="list-wrap">
       <ul>
@@ -8,10 +8,9 @@
           <div class="top">
             <div class="lf">{{item.tokenType==""?'质押DNT':'赎回'+item.tokenType}}</div>
             <div class="rt">
-              {{item.status==1?item.tokenType==""?'质押成功':'赎回成功':item.tokenType==""?'质押失败':'赎回失败'}}
-              
+              {{item|pledgeStatus}}  
               <i class="icon " v-if='item.status==1'></i>
-               <i class="icon active" v-else></i>
+               <i class="icon active"  v-if='item.status==2'></i>
             </div>
           </div>
           <div class="down">
@@ -19,26 +18,6 @@
             <div class="rt">{{item.amount|fixed}}DNT</div>
           </div>
         </li>
-        <!-- <li>
-                    <div class="top">
-                        <div class="lf">质押DNT</div>
-                        <div class="rt">质押成功<i class="icon"></i> </div>
-                    </div>
-                    <div class="down">
-                            <div class="lf">2019.11.01 00:00:00</div>
-                            <div class="rt">1200.368DNT</div> 
-                    </div>
-                </li>
-                 <li>
-                    <div class="top">
-                        <div class="lf">质押DNT</div>
-                        <div class="rt">质押成功<i class="icon active"></i> </div>
-                    </div>
-                    <div class="down">
-                            <div class="lf">2019.11.01 00:00:00</div>
-                            <div class="rt">1200.368DNT</div> 
-                    </div>
-        </li>-->
       </ul>
     </div>
   </div>
@@ -58,6 +37,14 @@ export default {
         return date.split(" ")[0];
       } catch (error) {
         return date;
+      }
+    },
+    pledgeStatus(item){
+      if(item.status==1){
+      return   item.tokenType==""?'质押成功':'赎回成功'
+      }
+      if(item.status==2){
+      return  item.tokenType==""?'质押失败':'赎回失败'
       }
     }
   },

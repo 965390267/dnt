@@ -35,7 +35,6 @@ export default {
       total:'',
       amount: "",
       src: require("../assets/img/dntlogo@2x.png"),
-      pledgeDate:'',
       isPassDate:false
     };
   },
@@ -46,7 +45,7 @@ export default {
         this.amount = Number(
           val.toString().substring(0, val.toString().length - 1)
         );
-        return this.$alert('已超过您所拥有的的最大量');
+        // return this.$alert('已超过您所拥有的的最大量');
       }
 
     }
@@ -89,8 +88,8 @@ export default {
   },
   mounted() {
    this.total = this.$route.query.pledgeAmout / 1000;
-    this.pledgeDate=this.$route.query.pledgeDate
     this.isPassDate=this.$route.query.isPassDate;//是否满15天，true是超过15天的
+    
   }  ,
   destroyed(){
          document.body.removeChild(document.querySelector('.mu-dialog-wrapper'))//一个不优雅的方式解决muse ui弹窗通过返回键返回不会关闭的问题，回到改页面移除弹窗DOM元素
@@ -119,7 +118,7 @@ export default {
   width: 95%;
   margin: 0 auto;
   margin-top: 10px;
-  padding: 6px 2px;
+   padding: 10px 2px;
   border: 1px solid #707070;
   border-radius: 6px;
 }
@@ -127,13 +126,14 @@ export default {
   border: none;
   outline: none;
   background: transparent;
+  padding-left: 6px;
 }
 .input-wrap .total {
   position: absolute;
   right: 14px;
-  top: 8px;
-  color: #707070;
-  font-size: 12px;
+      top: 12px;
+    color: #707070;
+    font-size: 16px;
 }
 /* 输入 */
 .pricegas {

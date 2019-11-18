@@ -53,19 +53,19 @@ export default {
   watch: {
     amount(val) {
       if (val > 0) this.isgrey = false;
-       if (val == 0) return this.$alert('余额不足，不可投入');
+
       if (val > this.userTotalAmount / 1000) {
         this.amount = Number(
           val.toString().substring(0, val.toString().length - 1)
         );
-        return this.$alert('已超过您所拥有的的最大量');
+        // return this.$alert('已超过您所拥有的的最大量');
       }
     }
   },
   methods: {
     get() {
       if (this.isgrey) return;
-      this.btnloading = true;
+
       this.amount = Number(this.amount);
         if (this.amount == 0) return this.$alert('余额不足，不可投入');
       if (!this.imtokenAddress) {
@@ -75,6 +75,7 @@ export default {
         return this.$router.back(-1);
       }
       let payAmount = this.amount * 1000;
+      this.btnloading = true;
       imtokenPay(dntABI,this.$route.query.nodeAddress, dntAddress, payAmount)
         .then(hash => {
     
@@ -113,6 +114,7 @@ export default {
     getGas().then(res=>{
       this.gas=res.data.gas/1000000000000000000;
     })
+
   } ,
   destroyed(){
          document.body.removeChild(document.querySelector('.mu-dialog-wrapper'))//一个不优雅的方式解决muse ui弹窗通过返回键返回不会关闭的问题，回到改页面移除弹窗DOM元素
@@ -141,7 +143,7 @@ export default {
   width: 95%;
   margin: 0 auto;
   margin-top: 10px;
-  padding: 6px 2px;
+  padding: 10px 2px;
   border: 1px solid #707070;
   border-radius: 6px;
 }
@@ -149,13 +151,14 @@ export default {
   border: none;
   outline: none;
   background: transparent;
+  padding-left: 6px;
 }
 .input-wrap .total {
   position: absolute;
   right: 14px;
-  top: 8px;
-  color: #707070;
-  font-size: 12px;
+    top: 12px;
+    color: #707070;
+    font-size: 16px;
 }
 /* 输入 */
 .pricegas {

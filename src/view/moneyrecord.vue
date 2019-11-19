@@ -15,7 +15,7 @@
         <li v-for="(item,index) in recordList" :key="index">
           <div class="top">
             <div class="lf">收益</div>
-            <div class="rt">{{item.incomeAmount/1000>0?'+'+item.incomeAmount/1000:'-'+item.incomeAmount/1000}}</div>
+            <div class="rt">{{'+'+item.incomeAmount/1000}}</div>
           </div>
           <div class="down">
             <div class="lf">{{item.createDate|formatDateToYear}}</div>

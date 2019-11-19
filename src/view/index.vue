@@ -50,7 +50,7 @@
     <NodeDetail></NodeDetail>
     <div class="guide">
       <router-link :to="{path:'/guide'}">
-     <div class="guide-txt"> 有何问题?</div>
+     <div class="guide-txt"> 遇到问题?</div>
      </router-link>
      </div>
   </div>
@@ -93,8 +93,8 @@ export default {
       this.dntBalance = res.data.dntBalance?res.data.dntBalance:0;
       getDNTCNY().then(ret => {
         /* nova转人民币汇率 */
-        this.totalCNY = (( this.totalAssetsDNT / 1000) * ret.data.cny).toFixed(3);
-        this.CNY=(( this.dntBalance / 1000) * ret.data.cny).toFixed(3);
+        this.totalCNY = (( this.totalAssetsDNT / 1000) * (ret.data.dntToCny||0)).toFixed(3);
+        this.CNY=(( this.dntBalance / 1000) *( ret.data.dntToCny||0)).toFixed(3);
       });
     });
   }

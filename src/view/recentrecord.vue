@@ -51,7 +51,7 @@ export default {
   methods: {},
   mounted() {
     recentTransactions(this.imtokenAddress).then(res => {
-      this.recordList = res.data;
+      this.recordList = res.data.filter((item)=>item.status==1||item.status==2);
     });
   }
 };

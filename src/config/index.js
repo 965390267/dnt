@@ -46,7 +46,7 @@ axios.interceptors.response.use(function (response) {
   console.log(response);
   let res = response.data
   if (!res.success) {
-    Toast.warning(res.msg||'出点小问题，再试一次');
+    Toast.message(res.msg||'出点小问题，再试一次');
   }
   return res;
 }, function (error) {

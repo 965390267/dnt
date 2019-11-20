@@ -63,7 +63,7 @@ export default {
         this.$alert('未授权钱包地址，请授权后重试');
         return this.$router.back(-1);
       }
-      this.$confirm(`提现数量：${this.amount}BFB,实际到账：${this.amount*0.99}BFB,将扣除1%作为提现手续费，您确定提现吗？`)
+      this.$confirm(`提现数量：${this.amount}BFB,实际到账：${this.amount*0.01<100?this.amount-100:this.amount*0.99}BFB`)
       .then(({ result }) => {
         if (result) {
            var obj = {

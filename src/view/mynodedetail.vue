@@ -68,11 +68,13 @@
         </div>
 
         <div class="btn normalbtn">
-          <router-link :to="{path:'/suhuidnt',query:{pledgeAmout:pledgeAmout,isPassDate:isPassDate}}">赎回DNT</router-link>
+          <router-link :to="{path:'/suhuidnt',query:{pledgeAmout:pledgeAmout,isPassDate:isPassDate}}">
+           <mu-ripple >赎回DNT</mu-ripple></router-link>
         </div>
 
         <div class="btn normalbtn">
-          <router-link :to="{path:'/suhuibfb',query:{totalIncome:totalIncome}}">提现BFB</router-link>
+          <router-link :to="{path:'/suhuibfb',query:{totalIncome:totalIncome}}">
+          <mu-ripple >提现BFB</mu-ripple></router-link>
         </div>
       </div>
       <!-- btn group -->

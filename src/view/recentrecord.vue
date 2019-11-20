@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="down">
-            <div class="lf">{{item.date|formatDateToYear}}</div>
+            <div class="lf">{{item.date}}</div>
             <div class="rt">{{item.amount|fixed}}DNT</div>
           </div>
         </li>

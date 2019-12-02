@@ -231,6 +231,7 @@ export default {
   text-align: right;
   padding-right: 2.5%;
   margin-top: 20px;
+  margin-bottom: 60px;
   font-size: 15px;
   height: 22px;
 }

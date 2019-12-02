@@ -6,15 +6,15 @@
              <mu-ripple>
           <div class="top">
             <div class="tit1">
-              <div class="left">{{totalPledgeAmout|fixed}}DNT</div>
-              <div class="right">100DNT:3BFB</div>
+              <div class="left">DNT淬炼池总量</div>
+              <div class="right">万份七日年化收益</div>
             </div>
             <div class="tit2">
               <div class="left">
-                DNT投入总量
+               {{totalPledgeAmout|fixed}}DNT 
                 <i></i>
               </div>
-              <div class="right">BFB年化收益</div>
+              <div class="right">5.75%</div>
             </div>
           </div>
           <div class="bottom">
@@ -31,10 +31,23 @@
               <div class="tit5">{{todayIncome|fixed}} BFB</div>
             </div>
           </div>
+          <div class="detail">
+            详情>
+          </div>
            </mu-ripple>
         </li>
         </router-link>
       </ul>
+        <!-- 用class名为ignore的容器包裹控制整个区域的显示隐藏 -->
+    <div class="btn-wrap">
+      <router-link
+        :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
+      >
+        <div class="btn fullwidth">
+          <mu-ripple>投入DNT</mu-ripple>
+        </div>
+      </router-link>
+    </div>
     </div>
 </template>
 <script>
@@ -46,6 +59,8 @@ export default {
            todayIncome: '',
            totalPledgeAmout: '',
            yesterdayIncome: '',
+           nodeAddress:'',
+           pledgeDate:''
         }
     },
     created(){
@@ -54,6 +69,8 @@ export default {
               this.todayIncome=res.data.todayIncome?res.data.todayIncome:0
               this.totalPledgeAmout=res.data.totalPledgeAmout?res.data.totalPledgeAmout:0
               this.yesterdayIncome=res.data.yesterdayIncome?res.data.yesterdayIncome:0
+               this.nodeAddress = res.data.nodeAddress;
+               this.pledgeDate = res.data.pledgeDate;
    })
     }
 }
@@ -86,20 +103,22 @@ li .top {
   color: #fff;
 }
 li .top .tit1 .left {
-  font-size: 15px;
+  font-size: 12px;
+  color: #eee;
   padding-left: 15px;
 }
 li .top .tit1 .right {
-  font-size: 15px;
+  font-size: 12px;
+  color: #eee;
   padding-right: 15px;
 }
 li .top .tit2 .left {
-  font-size: 12px;
+  font-size: 14px;
   padding-left: 15px;
   font-weight: 300;
 }
 li .top .tit2 .right {
-  font-size: 12px;
+  font-size: 14px;
   padding-right: 15px;
   font-weight: 300;
 }
@@ -136,5 +155,41 @@ li .bottom .right {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+.detail{
+      text-align: right;
+    padding-right: 2.5%;
+    background: #e9e9e9;
+    padding: 8px 0;
+    padding-right: 4.5%;
+    font-size:12px;
+font-family:PingFang SC;
+font-weight:400;
+line-height:22px;
+color:rgba(0,0,0,1);
+}
+.btn-wrap {
+
+  width: 100%;
+}
+
+.btn {
+  position: relative;
+  border-radius: 24px;
+  text-align: center;
+  color: #fff;
+  line-height: 48px;
+  font-size: 17px;
+}
+.fullwidth {
+  width: 90%;
+  margin: 0 auto;
+  height: 48px;
+  background: linear-gradient(
+    131deg,
+    rgba(38, 38, 107, 1) 0%,
+    rgba(19, 24, 36, 1) 100%
+  );
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.55);
 }
 </style>

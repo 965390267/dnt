@@ -10,7 +10,7 @@ Vue.use(Router)
       name: 'index',
       component:()=>import('@/view/index'),
       meta:{
-        title:'DNT双轨经济生态'
+        title:'DNT双轨经济生态 Beta v0.1'
       }
     },
 
@@ -19,7 +19,7 @@ Vue.use(Router)
       name: 'zhiya',
       component:()=>import('@/view/ziya'),
       meta:{
-        title:'DNT双轨经济生态'
+        title:'DNT双轨经济生态 Beta v0.1'
       }
     }
     ,
@@ -28,7 +28,7 @@ Vue.use(Router)
       name: 'suhuidnt',
       component:()=>import('@/view/suhuidnt'),
       meta:{
-        title:'DNT双轨经济生态'
+        title:'DNT双轨经济生态 Beta v0.1'
       }
     },
     {
@@ -36,7 +36,7 @@ Vue.use(Router)
       name: 'suhuibfb',
       component:()=>import('@/view/suhuibfb'),
       meta:{
-        title:'DNT双轨经济生态'
+        title:'DNT双轨经济生态 Beta v0.1'
       }
     }
     ,
@@ -45,7 +45,7 @@ Vue.use(Router)
       name: 'mynodedetail',
       component:()=>import('@/view/mynodedetail'),
       meta:{
-        title:'DNT双轨经济生态'
+        title:'DNT双轨经济生态 Beta v0.1'
       }
     },
     {
@@ -69,7 +69,7 @@ Vue.use(Router)
       name: 'guide',
       component:()=>import('@/view/guide'),
       meta:{
-        title:'问题查看'
+        title:'常见问题'
       }
     },
 

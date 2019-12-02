@@ -6,7 +6,7 @@
       <ul>
         <li v-for="(item,index) in recordList" :key="index">
           <div class="top">
-            <div class="lf">{{item.tokenType==""?'质押DNT':'赎回'+item.tokenType}}</div>
+            <div class="lf">{{item.tokenType==""?'投入DNT':'赎回'+item.tokenType}}</div>
             <div class="rt">
               {{item|pledgeStatus}}  
               <i class="icon " v-if='item.status==1'></i>
@@ -41,10 +41,10 @@ export default {
     },
     pledgeStatus(item){
       if(item.status==1){
-      return   item.tokenType==""?'质押成功':'赎回成功'
+      return   item.tokenType==""?'投入成功':'赎回成功'
       }
       if(item.status==2){
-      return  item.tokenType==""?'质押失败':'赎回失败'
+      return  item.tokenType==""?'投入失败':'赎回失败'
       }
     }
   },
@@ -68,8 +68,7 @@ export default {
   text-align: center;
 }
 /* 列表 */
-.list-wrap {
-}
+
 .list-wrap li {
   width: 95%;
   margin: 6px auto;

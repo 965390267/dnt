@@ -1,20 +1,21 @@
 <template>
   <div class="nodedetail" v-cloak>
     <div class="card">
-      <p class="tit">DNT 双轨经济生态 BFB</p>
+      <p class="tit">DNT & BFB</p>
       <div class="tit2">
         <div class="top">
-          <div class="lf">{{totalPledgeAmout|fixed}}DNT</div>
-          <div class="rt">100DNT:3BFB</div>
+          <div class="lf">DNT淬炼池总量</div>
+          <div class="rt">万份七日年化收益率</div>
         </div>
         <div class="down">
-          <div class="lf">DNT投入总量</div>
-          <div class="rt">BFB年化收益</div>
+          <div class="lf">{{totalPledgeAmout|fixed}}DNT</div>
+          <div class="rt">5.75%</div>
         </div>
       </div>
       <div class="dot-line"></div>
       <p class="gg">投入DNT，每日坐享BFB收益。</p>
       <p class="gg">DNT交易所网址：www.bbkx.com</p>
+      <div class="gg">BFB交易所网址：www.bitcola.pro</div>
     </div>
     <!-- 没有记录时候 -->
     <div class="record" v-if="!isPledged">
@@ -198,8 +199,12 @@ export default {
 }
 .tit2 .top .lf {
   padding-left: 15px;
+  font-size: 12px;
+  color: #eee;
 }
 .tit2 .top .rt {
+  font-size: 12px;
+  color: #eee;
   padding-right: 15px;
 }
 .tit2 .down {
@@ -209,8 +214,10 @@ export default {
 .tit2 .down .lf {
   padding-left: 15px;
       color: #ccc;
+      font-size:15px;
 }
 .tit2 .down .rt {
+  font-size:15px;
   padding-right: 15px;
     color: #ccc;
 }

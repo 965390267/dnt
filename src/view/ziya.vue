@@ -15,11 +15,11 @@
     <div class="pladge-rule">
       <p class="p1">质押规则：</p>
       <p>当日投入DNT后将于次日产生BFB收益，并将于每日24:00结算当日收益。</p>
-      <p>BFB的产出速度与根据投入DNT的时间和数量呈正比。</p>
+      <p>BFB的产出速度与投入DNT的时间和数量呈正比。</p>
       <p>即DNT投入数量越多，BFB产出越快；DNT投入时间越久，BFB产出越多。</p>
-      <p>投入10000DNT，一年将产出300BFB。</p>
+      <!-- <p>投入10000DNT，一年将产出300BFB。</p>
       <p>DNT现价：{{dntToUsdt.toFixed(6)}}USDT</p>
-      <p>BFB现价：{{bfbToUsdt.toFixed(6)}}USDT</p>
+      <p>BFB现价：{{bfbToUsdt.toFixed(6)}}USDT</p> -->
     </div>
     <div class="btn-wrap">
       <div
@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     get() {
+      
       if (this.isgrey) return;
 
       this.amount = Number(this.amount);

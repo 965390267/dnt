@@ -18,9 +18,9 @@
       </div>
       <div class="card2">
         <div class="tit sm">
-          <div class="left">DNT总资产</div>
+          <!-- <div class="left">DNT总资产</div>
           <div class="right">{{totalAssetsDNT|fixed}} DNT</div>
-          <div class="sm-tit">￥{{totalCNY}}</div>
+          <div class="sm-tit">￥{{totalCNY}}</div> -->
         </div>
 
         <div class="tit">
@@ -40,7 +40,7 @@
         <div class="icon"></div>DNT
       </div>
       <div class="mid">
-        <div class="icon"></div>双轨经济生态
+        <div class="icon"></div>首发合作
       </div>
       <div class="right">
         <div class="icon"></div>BFB
@@ -48,6 +48,7 @@
     </div>
     <!-- middle logo end -->
     <NodeDetail></NodeDetail>
+  
     <div class="guide">
       <router-link :to="{path:'/guide'}">
      <div class="guide-txt"> 遇到问题?</div>
@@ -167,6 +168,7 @@ export default {
 
 .card .card2 .tit.sm {
   position: relative;
+  flex: .3;
 }
 
 .sm .sm-tit {
@@ -228,6 +230,7 @@ export default {
  position: relative;
   text-align: right;
   padding-right: 2.5%;
+  margin-top: 20px;
   font-size: 15px;
   height: 22px;
 }
@@ -244,4 +247,5 @@ export default {
   height: 1px;
   background: #000;
 }
+
 </style>

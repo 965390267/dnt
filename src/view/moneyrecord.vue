@@ -19,7 +19,7 @@
           </div>
           <div class="down">
             <div class="lf">{{item.createDate|formatDateToYear}}</div>
-            <div class="rt">{{item.dateIncomeAmount|fixed}}DFB</div>
+            <div class="rt">{{item.dateIncomeAmount|fixed}}BFB</div>
           </div>
         </li>
       </ul>

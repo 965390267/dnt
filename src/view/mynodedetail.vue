@@ -5,7 +5,7 @@
       <div class="tit2">
         <div class="top">
           <div class="lf">DNT淬炼池总量</div>
-          <div class="rt">万份七日年化收益率</div>
+          <div class="rt">每万份DNT七日收益</div>
         </div>
         <div class="down">
           <div class="lf">{{totalPledgeAmout|fixed}}DNT</div>
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="dot-line"></div>
-      <p class="gg">投入DNT，每日坐享BFB收益。</p>
+      <p class="gg">投入DNT，每日免费获取BFB收益。</p>
       <p class="gg">DNT交易所网址：www.bbkx.com</p>
       <div class="gg">BFB交易所网址：www.bitcola.pro</div>
     </div>

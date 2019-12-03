@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     get() {
-      
+  
       if (this.isgrey) return;
 
       this.amount = Number(this.amount);

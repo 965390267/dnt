@@ -87,7 +87,7 @@
             <div class="up">
               <div
                 class="lf"
-              >{{item.tokenType==""?'DNT':item.tokenType}}{{item.type==0?'质押中':'赎回中'}}</div>
+              >{{item.tokenType==""?'DNT':item.tokenType}}{{item.type==0?'投入中':'赎回中'}}</div>
               <div class="rt">交易正在打包</div>
             </div>
             <div class="down">
@@ -309,6 +309,7 @@ export default {
   color: #fff;
   line-height: 48px;
   font-size: 17px;
+  overflow: hidden;
 }
 .fullwidth {
   width: 90%;

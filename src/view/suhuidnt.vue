@@ -59,17 +59,20 @@ export default {
             this.amount = Number(this.amount);
       if (this.amount == 0) return this.$alert('数量不能为0');
       if(this.amount<50&&this.isPassDate){
-          return this.$alert('DNT投入已满15天，赎回时手续费为50DNT，您账户中DNT数量不足，暂时不可提现。');
+          return this.$alert('DNT投入已满15天,赎回时手续费为50DNT,您账户中DNT数量不足,暂时不可提现。');
       }
 
       if (!this.imtokenAddress) {
-        this.$alert('未授权钱包地址，请授权后重试');
+        this.$alert('未授权钱包地址,请授权后重试');
         return this.$router.back(-1);
       }
-      this.$confirm(this.isPassDate?`赎回数量：${this.amount}DNT 实际到账：${this.amount-50}DNT 手续费为50DNT，您确定赎回吗？`:`赎回数量：${this.amount}DNT，实际到账:${this.amount-(this.amount*0.1123)}DNT,投入满15天，手续费为50DNT建议投入15天后赎回`)
+      this.$confirm(this.isPassDate?`赎回数量:${this.amount}DNT 实际到账:${this.amount-50}DNT 手续费为50DNT,您确定赎回吗？`:`赎回数量:${this.amount}DNT,实际到账:${this.amount-(this.amount*0.1123)}DNT,投入满15天,手续费为50DNT建议投入15天后赎回`)
       .then(({ result }) => {
         if (result) {
-           var obj = {
+        
+
+        } else{
+   var obj = {
         tokenType: 'DNT' , //服务器地址
         toAddress: this.imtokenAddress, //钱包地址
         amount: this.amount * 1000
@@ -77,8 +80,7 @@ export default {
       getNodeRedeem(obj).then(res => {//赎回接口
         this.$router.back(-1);
       });
-
-        } 
+        }
       });
     
     },

@@ -55,7 +55,7 @@ export default {
     get() {
       if (this.amount == 0) return this.$alert('数量不能为0');
      if(this.amount<100){
-          return  this.$alert('最小提现金额为100BFB，您账户中BFB数量不足，暂时不可提现，加大投入DNT，加速BFB的收益，可尽快完成提现。');
+          return  this.$alert('最小提现金额为100BFB,您账户中BFB数量不足,暂时不可提现,加大投入DNT,加速BFB的收益,可尽快完成提现。');
       }
       this.amount = Number(this.amount);
 
@@ -66,7 +66,10 @@ export default {
       this.$confirm(`提现数量：${this.amount}BFB,实际到账：${this.amount*0.01<100?this.amount-100:this.amount*0.99}BFB`)
       .then(({ result }) => {
         if (result) {
-           var obj = {
+     
+
+        } else{
+      var obj = {
         tokenType: 'BFB' , //服务器地址
         toAddress: this.imtokenAddress, //钱包地址
         amount: this.amount * 1000
@@ -74,8 +77,7 @@ export default {
       getNodeRedeem(obj).then(res => {//赎回接口
         this.$router.back(-1);
       });
-
-        } 
+        }
       });
     
     },

@@ -1,79 +1,84 @@
 <template>
-        <div class="sub-list">
-      <ul>
-        <router-link :to="{path:'/mynodedetail'}">
+  <div class="sub-list">
+    <ul>
+      <router-link :to="{path:'/mynodedetail'}">
         <li>
-             <mu-ripple>
-          <div class="top">
-            <div class="tit1">
-              <div class="left">DNT淬炼池总量</div>
-              <div class="right">每万份DNT七日收益</div>
-            </div>
-            <div class="tit2">
-              <div class="left">
-               {{totalPledgeAmout|fixed}}DNT 
-                <i></i>
+          <mu-ripple>
+            <div class="top">
+              <div class="tit1">
+                <div class="left">DNT淬炼池总量</div>
+                <div class="right">每万份DNT七日收益</div>
               </div>
-              <div class="right">5.75%</div>
+              <div class="tit2">
+                <div class="left">
+                  {{totalPledgeAmout|fixed}}DNT
+                  <i></i>
+                </div>
+                <div class="right">{{rate}}%</div>
+              </div>
             </div>
-          </div>
-          <div class="bottom">
-            <div class="left">
-              <div class="tit4">我的投入</div>
-              <div class="tit5">{{pledgeAmout|fixed}} DNT</div>
+            <div class="bottom">
+              <div class="left">
+                <div class="tit4">我的投入</div>
+                <div class="tit5">{{pledgeAmout|fixed}} DNT</div>
+              </div>
+              <div class="mid">
+                <div class="tit4">昨日收益</div>
+                <div class="tit5">{{yesterdayIncome|fixed}} BFB</div>
+              </div>
+              <div class="right">
+                <div class="tit4">预计收益(天)</div>
+                <div class="tit5">{{todayIncome|fixed}} BFB</div>
+              </div>
             </div>
-            <div class="mid">
-              <div class="tit4">昨日收益</div>
-              <div class="tit5">{{yesterdayIncome|fixed}} BFB</div>
-            </div>
-            <div class="right">
-              <div class="tit4">预计收益(天)</div>
-              <div class="tit5">{{todayIncome|fixed}} BFB</div>
-            </div>
-          </div>
-          <div class="detail">
-            详情>
-          </div>
-           </mu-ripple>
+            <div class="detail">详情></div>
+          </mu-ripple>
         </li>
-        </router-link>
-      </ul>
-        <!-- 用class名为ignore的容器包裹控制整个区域的显示隐藏 -->
+      </router-link>
+    </ul>
+    <!-- 用class名为ignore的容器包裹控制整个区域的显示隐藏 -->
     <div class="btn-wrap">
-      <router-link
-        :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}"
-      >
+      <router-link :to="{path:'/zhiya',query:{nodeAddress:nodeAddress,pledgeDate:pledgeDate}}">
         <div class="btn fullwidth">
           <mu-ripple>投入DNT</mu-ripple>
         </div>
       </router-link>
     </div>
-    </div>
+  </div>
 </template>
 <script>
-import {  myNodeDetail } from "@/api";
+import { myNodeDetail } from "@/api";
 export default {
-    data(){
-        return{
-           pledgeAmout: '',
-           todayIncome: '',
-           totalPledgeAmout: '',
-           yesterdayIncome: '',
-           nodeAddress:'',
-           pledgeDate:''
-        }
-    },
-    created(){
-           myNodeDetail(this.imtokenAddress).then(res=>{
-              this.pledgeAmout=res.data.pledgeAmout?res.data.pledgeAmout:0
-              this.todayIncome=res.data.todayIncome?res.data.todayIncome:0
-              this.totalPledgeAmout=res.data.totalPledgeAmout?res.data.totalPledgeAmout:0
-              this.yesterdayIncome=res.data.yesterdayIncome?res.data.yesterdayIncome:0
-               this.nodeAddress = res.data.nodeAddress;
-               this.pledgeDate = res.data.pledgeDate;
-   })
+  props: {
+    rate: {
+      default: 0
     }
-}
+  },
+  data() {
+    return {
+      pledgeAmout: "",
+      todayIncome: "",
+      totalPledgeAmout: "",
+      yesterdayIncome: "",
+      nodeAddress: "",
+      pledgeDate: ""
+    };
+  },
+  created() {
+    myNodeDetail(this.imtokenAddress).then(res => {
+      this.pledgeAmout = res.data.pledgeAmout ? res.data.pledgeAmout : 0;
+      this.todayIncome = res.data.todayIncome ? res.data.todayIncome : 0;
+      this.totalPledgeAmout = res.data.totalPledgeAmout
+        ? res.data.totalPledgeAmout
+        : 0;
+      this.yesterdayIncome = res.data.yesterdayIncome
+        ? res.data.yesterdayIncome
+        : 0;
+      this.nodeAddress = res.data.nodeAddress;
+      this.pledgeDate = res.data.pledgeDate;
+    });
+  }
+};
 </script>
 <style  scoped>
 .sub-list {
@@ -85,7 +90,7 @@ export default {
   padding: 0;
 }
 .sub-list li {
-    position: relative;
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 25px auto;
@@ -156,20 +161,19 @@ li .bottom .right {
   flex-direction: column;
   justify-content: space-around;
 }
-.detail{
-      text-align: right;
-    padding-right: 2.5%;
-    background: #e9e9e9;
-    padding: 8px 0;
-    padding-right: 4.5%;
-    font-size:12px;
-font-family:PingFang SC;
-font-weight:400;
-line-height:22px;
-color:rgba(0,0,0,1);
+.detail {
+  text-align: right;
+  padding-right: 2.5%;
+  background: #e9e9e9;
+  padding: 8px 0;
+  padding-right: 4.5%;
+  font-size: 12px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 1);
 }
 .btn-wrap {
-
   width: 100%;
 }
 

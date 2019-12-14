@@ -11,13 +11,10 @@
       <input type="number" placeholder="输入数量" v-model="amount"/>
       <div class="total" @click="setAll()">BFB | 全部</div>
     </div>
-    <div class="pricegas">手续费：1%</div>
+    <div class="pricegas">手续费：30BFB</div>
     <div class="pladge-rule">
       <p class="p1">提现规则：</p>
-      <p>提现BFB时，会扣除您提现数量的1%作为手续费，但提现的最低手续费为100BFB，即您的收益未满100BFB时将不可进行提现操作。</p>
-      <p>例如：</p>
-      <p>您提现150BFB时，会扣除100BFB作为手续费，实际到账50BFB。</p>
-      <p>您提现15000BFB时，会扣除提现总额的1%作为提现手续费，即150BFB，实际到账14850BFB</p>
+      <p>"提现BFB时，会扣除您提现数量中30BFB作为手续费"之前的提现手续费规则作废</p>
     </div>
     <div class="btn-wrap">
       <div class="btn" @click=" get()">确定</div>
@@ -54,8 +51,11 @@ export default {
   methods: {
     get() {
       if (this.amount == 0) return this.$alert('数量不能为0');
-     if(this.amount<100){
-          return  this.$alert('最小提现金额为100BFB,您账户中BFB数量不足,暂时不可提现,加大投入DNT,加速BFB的收益,可尽快完成提现。');
+    //  if(this.amount<100){
+    //       return  this.$alert('最小提现金额为100BFB,您账户中BFB数量不足,暂时不可提现,加大投入DNT,加速BFB的收益,可尽快完成提现。');
+    //   }
+     if(this.amount<30){
+          return  this.$alert('最小提现金额为30BFB,您账户中BFB数量不足,暂时不可提现');
       }
       this.amount = Number(this.amount);
 
@@ -63,7 +63,8 @@ export default {
         this.$alert('未授权钱包地址，请授权后重试');
         return this.$router.back(-1);
       }
-      this.$confirm(`提现数量：${this.amount}BFB,实际到账：${this.amount*0.01<100?this.amount-100:this.amount*0.99}BFB`)
+      //let tips=`提现数量：${this.amount}BFB,实际到账：${this.amount*0.01<100?this.amount-100:this.amount*0.99}BFB`
+      this.$confirm(`提现数量：${this.amount}BFB,实际到账：${this.amount-30}`)
       .then(({ result }) => {
         if (result) {
      

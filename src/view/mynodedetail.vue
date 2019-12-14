@@ -9,7 +9,7 @@
         </div>
         <div class="down">
           <div class="lf">{{totalPledgeAmout|fixed}}DNT</div>
-          <div class="rt">5.75%</div>
+          <div class="rt">{{rate}}%</div>
         </div>
       </div>
       <div class="dot-line"></div>
@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { myNodeDetail, recentTransactions } from "@/api";
+import { myNodeDetail, recentTransactions ,getDNTCNY} from "@/api";
 export default {
   data() {
     return {
@@ -125,7 +125,8 @@ export default {
       recordList: [],
       nodeAddress: "",
       pledgeDate: "",
-      isPassDate:''
+      isPassDate:'',
+      rate:''
     };
   },
   computed: {
@@ -154,6 +155,9 @@ export default {
         let result = res.data;
         this.recordList = result.filter(item => item.status == 0); //0代表交易中
       });
+      getDNTCNY().then(res=>{
+        this.rate=(((3*res.data.bfbToCny)/(100*res.data.dntToCny))*100).toFixed(2);
+      })
     }
   },
   mounted(){

@@ -27,6 +27,11 @@
           <div class="left">BFB总资产</div>
           <div class="right">{{totalAssetsBFB|fixed}}BFB</div>
         </div>
+         <div class="tit sm">
+          <!-- <div class="left">DNT总资产</div>
+          <div class="right">{{totalAssetsDNT|fixed}} DNT</div> -->
+          <div class="sm-tit">￥{{totalCNY}}</div>
+        </div>
         <div class="tit">
           <div class="left">累计收益</div>
           <div class="right">{{totalIncome|fixed}}BFB</div>
@@ -47,7 +52,7 @@
       </div>
     </div>
     <!-- middle logo end -->
-    <NodeDetail></NodeDetail>
+    <NodeDetail :rate='rate'></NodeDetail>
   
     <div class="guide">
       <router-link :to="{path:'/guide'}">
@@ -73,7 +78,8 @@ export default {
       totalAssetsDNT: '',
       totalAssetsBFB: '',
       totalIncome: '',
-      dntBalance: ''
+      dntBalance: '',
+      rate:''
     };
   },
   computed: {
@@ -94,6 +100,7 @@ export default {
       this.dntBalance = res.data.dntBalance?res.data.dntBalance:0;
       getDNTCNY().then(ret => {
         /* nova转人民币汇率 */
+         this.rate=(((3*ret.data.bfbToCny)/(100*ret.data.dntToCny))*100).toFixed(2);
         this.totalCNY = (( this.totalAssetsDNT / 1000) * (ret.data.dntToCny||0)).toFixed(3);
         this.CNY=(( this.dntBalance / 1000) *( ret.data.dntToCny||0)).toFixed(3);
       });
@@ -174,7 +181,7 @@ export default {
 .sm .sm-tit {
   position: absolute;
   right: 0;
-  bottom: 0;
+   top: -15px;
   font-size: 10px;
 }
 .card .tit1 .left,

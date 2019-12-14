@@ -30,7 +30,7 @@
          <div class="tit sm">
           <!-- <div class="left">DNT总资产</div>
           <div class="right">{{totalAssetsDNT|fixed}} DNT</div> -->
-          <div class="sm-tit">￥{{totalCNY}}</div>
+          <div class="sm-tit">￥{{totalBFB}}</div>
         </div>
         <div class="tit">
           <div class="left">累计收益</div>
@@ -74,6 +74,7 @@ export default {
     return {
       CNY: '',
       totalCNY:'',
+      totalBFB:'',
       nodeaddress: this.imtokenAddress,
       totalAssetsDNT: '',
       totalAssetsBFB: '',
@@ -100,6 +101,7 @@ export default {
       this.dntBalance = res.data.dntBalance?res.data.dntBalance:0;
       getDNTCNY().then(ret => {
         /* nova转人民币汇率 */
+        this.totalBFB= (( this.totalAssetsBFB / 1000) * (ret.data.bfbToCny||0)).toFixed(3);
          this.rate=(((3*ret.data.bfbToCny)/(100*ret.data.dntToCny))*100).toFixed(2);
         this.totalCNY = (( this.totalAssetsDNT / 1000) * (ret.data.dntToCny||0)).toFixed(3);
         this.CNY=(( this.dntBalance / 1000) *( ret.data.dntToCny||0)).toFixed(3);

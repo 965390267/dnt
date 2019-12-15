@@ -5,7 +5,7 @@
       <div class="tit2">
         <div class="top">
           <div class="lf">DNT淬炼池总量</div>
-          <div class="rt">每万份DNT七日收益</div>
+          <div class="rt">实时收益率</div>
         </div>
         <div class="down">
           <div class="lf">{{totalPledgeAmout|fixed}}DNT</div>

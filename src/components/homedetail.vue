@@ -7,7 +7,7 @@
             <div class="top">
               <div class="tit1">
                 <div class="left">DNT淬炼池总量</div>
-                <div class="right">每万份DNT七日收益</div>
+                <div class="right">实时收益率</div>
               </div>
               <div class="tit2">
                 <div class="left">

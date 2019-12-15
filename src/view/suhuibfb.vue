@@ -14,7 +14,7 @@
     <div class="pricegas">手续费：30BFB</div>
     <div class="pladge-rule">
       <p class="p1">提现规则：</p>
-      <p>"提现BFB时，会扣除您提现数量中30BFB作为手续费"之前的提现手续费规则作废</p>
+      <p>提现BFB时，会扣除您提现数量中30BFB作为手续费</p>
     </div>
     <div class="btn-wrap">
       <div class="btn" @click=" get()">确定</div>

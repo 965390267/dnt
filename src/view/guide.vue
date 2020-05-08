@@ -1,6 +1,6 @@
 <template>
     <div class="guide-page">
-       <img src="../assets/img/guide.png" alt="" srcset="">
+       <img src="../assets/img/guide.jpg" alt="" srcset="">
     </div>
 </template>
 <style scoped>
